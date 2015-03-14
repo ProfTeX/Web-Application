@@ -41,11 +41,8 @@
             </div>
             
             <button id="pdf" onclick="showpdf()">PDF anzeigen</button>
-	    <div class="pdf-div" style="padding: 2em;display: none;">
+	    <div class="pdf-div" style="display: none;">
 	      <div class="pdf-content">
-		<div class="chapter-heading">1. Das ist eine Überschrift</div>
-                <div class="chapter-subheading">1.1 Das ist eine Unterüberschrift</div>
-		<br />
 		<div class="pdf-render"></div>
 	      </div>
 	      <button id="closepdf" onclick="closepdf()">Close PDF</button>

@@ -13,8 +13,15 @@ function showpdf()
 	background: "#FFF"
     }); //.appendTo($("#doc").css("position", "relative"));
 
-
-    katex.render(renderstr, $('.pdf-render')[0]);
+    $.ajax({
+    	  url: "PDFServlet"
+    	}).done(function(result) 
+    	{
+    	    $('.pdf-render').html(result);
+    	    $('object.pdf_obj').css("width", $('div.pdf-div').height());
+    	    $('object.pdf_obj').css("height", $('div.pdf-div').width());
+    		//alert(result);
+    	});
 }
 
 function closepdf()
