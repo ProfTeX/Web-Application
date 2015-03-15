@@ -1,0 +1,71 @@
+nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 45px;
+  background-color: #101010;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  z-index: 9001; }
+  nav .logo {
+    color: #F0F0F0;
+    font-family: TeX, serif;
+    font-size: 30px;
+    padding: 1px 0 4px 0; }
+  nav .threebars {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 45px;
+    width: 40px;
+    text-align: center; }
+    nav .threebars div {
+      position: absolute;
+      top: 5px;
+      border-bottom: 14px double #F0F0F0;
+      border-top: 5px solid #F0F0F0;
+      content: "";
+      height: 5px;
+      width: 30px;
+      margin: 5px 0; }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #999; }
+
+button {
+  display: inline;
+  box-sizing: content-box;
+  cursor: pointer;
+  margin: 2px;
+  padding: 25px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border: 0px;
+  border-radius: 5px;
+  color: #F0F0F0;
+  font-family: TeX, serif;
+  font-size: 20px;
+  color: #F0F0F0;
+  text-overflow: clip;
+  background-color: #101010; }
+
+a.button:link {
+  font-weight: normal;
+  text-decoration: none; }
+a.button:visited {
+  font-weight: normal;
+  text-decoration: none; }
+a.button:focus {
+  font-weight: normal;
+  text-decoration: none; }
+a.button:hover {
+  font-weight: normal;
+  text-decoration: none; }
+a.button:active {
+  font-weight: normal;
+  text-decoration: none; }
