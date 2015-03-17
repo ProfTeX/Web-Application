@@ -1,3 +1,5 @@
+package java;
+
 
 
 import java.io.File;
@@ -32,7 +34,8 @@ public class PDFServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PDFCreator pdf = new PDFCreator("pdftest", "pdftest");
+		PDFCreator pdf = new PDFCreator();
+		pdf.setOutputDir(getServletContext().getRealPath("/") + "pdf_temp");
 		String output = pdf.compileString("\\documentclass{scrartcl}\n" + 
 				"\n" + 
 				"\\usepackage[utf8]{inputenc}\n" + 
@@ -100,7 +103,7 @@ public class PDFServlet extends HttpServlet {
 	         }
 	      }
 		
-		Files.move(Paths.get(output), Paths.get(getServletContext().getRealPath("/") + "pdf_temp/" + pdf.getUUID() + ".pdf"));
+		//Files.move(Paths.get(output), Paths.get(getServletContext().getRealPath("/") + "pdf_temp/" + pdf.getUUID() + ".pdf"));
 		//System.out.println(getServletContext().getRealPath("/") + "pdf_temp" + pdf.getUUID() + ".pdf");
 		
 		request.setAttribute("pdf_path", "pdf_temp/"+pdf.getUUID() + ".pdf");
