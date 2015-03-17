@@ -1,4 +1,4 @@
-package java;
+package pdf;
 
 import java.io.BufferedReader;
 import java.io.File;
