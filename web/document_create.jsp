@@ -4,8 +4,6 @@
         <meta charset="UTF-8" />
         <title>ProfTeX - Dokument bearbeiten</title>
         <link rel="stylesheet" type="text/css" href="css/document_create.css">
-	<link rel="stylesheet" href="css/katex.min.css">
-	<script src="js/katex.min.js"></script>
 	<script src="js/pdf.js"></script>
 
     </head>

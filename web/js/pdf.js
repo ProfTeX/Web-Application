@@ -12,16 +12,15 @@ function showpdf()
 	zIndex: 1000000,
 	background: "#FFF"
     }); //.appendTo($("#doc").css("position", "relative"));
-
-    $.ajax({
-    	  url: "PDFServlet"
-    	}).done(function(result) 
-    	{
-    	    $('.pdf-render').html(result);
-    	    $('object.pdf_obj').css("width", $('div.pdf-div').height());
-    	    $('object.pdf_obj').css("height", $('div.pdf-div').width());
-    		//alert(result);
-    	});
+    
+   	$.ajax({
+   		url: "PDFServlet",
+   		}).done(function(result) 
+   				{
+   					$('.pdf-render').html(result);
+   					$('object.pdf_obj').css("width", $('div.pdf-div').width());
+   					$('object.pdf_obj').css("height", $('div.pdf-div').height() - $('button#closepdf').height());
+   				});
 }
 
 function closepdf()

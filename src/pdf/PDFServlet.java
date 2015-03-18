@@ -32,10 +32,16 @@ public class PDFServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		
+		File pdftemp = new File(getServletContext().getRealPath("/") + "pdf_temp");
+		pdftemp.mkdirs();
 		
 		PDFCreator pdf = new PDFCreator();
-		pdf.setOutputDir(getServletContext().getRealPath("/") + "pdf_temp");
+		pdf.setOutputDir(pdftemp.getAbsolutePath());
+		//System.out.println(request.getParameter("texstring"));
+		//TODO: Daten von DB holen, Parameter übergeben
 		String output = pdf.compileString("\\documentclass{scrartcl}\n" + 
 				"\n" + 
 				"\\usepackage[utf8]{inputenc}\n" + 
@@ -86,9 +92,6 @@ public class PDFServlet extends HttpServlet {
 				"\\end{document}\n" + 
 				"");
 		
-		File pdftemp = new File(getServletContext().getRealPath("/") + "pdf_temp");
-		pdftemp.mkdirs();
-		
 		//delete files older than 1h
 		File[] listFiles = pdftemp.listFiles();           
 	    long purgeTime = System.currentTimeMillis() - (60 * 60 * 1000);
@@ -102,9 +105,6 @@ public class PDFServlet extends HttpServlet {
 	            }
 	         }
 	      }
-		
-		//Files.move(Paths.get(output), Paths.get(getServletContext().getRealPath("/") + "pdf_temp/" + pdf.getUUID() + ".pdf"));
-		//System.out.println(getServletContext().getRealPath("/") + "pdf_temp" + pdf.getUUID() + ".pdf");
 		
 		request.setAttribute("pdf_path", "pdf_temp/"+pdf.getUUID() + ".pdf");
 		

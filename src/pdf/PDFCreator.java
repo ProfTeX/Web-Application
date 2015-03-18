@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -85,6 +86,10 @@ public class PDFCreator
 			
 			return targetPath;
 			
+		}
+		catch(NoSuchFileException e)
+		{
+			System.err.print("work.pdf not found!\n\nConsole output:\n" + this.consoleOutput);
 		}
 		catch (IOException e) 
 		{
