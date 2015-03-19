@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,23 +20,34 @@
             <img src="beispiel.jpg" />
         </div>
         <div id="right">
-            <div id="doc">
-                <div class="chapter-heading">1. Das ist eine �berschrift</div>
-                <div class="chapter-subheading">1.1 Das ist eine Unter�berschrift</div>
+            <div class="chapter-heading">1. Das ist eine Überschrift</div>
+            <div class="chapter-subheading">1.1 Das ist eine Unterüberschrift</div>
 
-                <p data-title="Lorem ipsum" data-tags="beweis, vl1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <div class="element">
+                <div class="checkbox"><input type="checkbox" name="choose" value="block-1" /></div>
+                <div class="block">
+                    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="Lorem ipsum" /><br /></div>
+                    <div><label for="desc">Beschreibung:</label><br />
+                    <textarea name="desc" class="block-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</textarea></div>
+                    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" value="beweis, vl1" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
+                    <button id="submit">Übernehmen</button>
+                </div>
             </div>
             
-            <div id="new-block">
-                <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>
-                <div><label for="desc">Beschreibung:</label><br />
-                <textarea name="desc" class="block-text"></textarea></div>
-                <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
-                <button id="submit">�bernehmen</button>
-            </div>
+            <div class="element">
+                <div class="checkbox"><input type="checkbox" name="choose" value="block-1" /></div>
+                <div class="block">
+                    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>
+                    <div><label for="desc">Beschreibung:</label><br />
+                    <textarea name="desc" class="block-text"></textarea></div>
+                    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
+                    <button id="submit">Übernehmen</button>
+                </div>
+            </div>    
+                
             <div class="new-element">
-                <button class="chapter">Neues Kapitel</button>
-                <button class="block">Neuer Block</button>
+                <button class="btn-chapter">Neues Kapitel</button>
+                <button class="btn-block">Neuer Block</button>
             </div>
             
             <button id="pdf" onclick="showpdf()">PDF anzeigen</button>
@@ -90,9 +102,7 @@
 
         $('#new-block > button').click( accept );
 
-        $('#doc p').click( editBlock );
-
-        $('.block').click(function() {
+        $('.btn-block').click(function() {
             editBlock.call( null );
         });
     </script>
