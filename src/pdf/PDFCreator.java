@@ -105,7 +105,7 @@ public class PDFCreator
 	{
 		Runtime r = Runtime.getRuntime();
 		String output = "";
-		Process p = r.exec("pdflatex -interaction nonstopmode -halt-on-error -file-line-error -output-directory="+ this.workDir +" -aux-directory="+ this.workDir +"/aux "+ texPath);
+		Process p = r.exec("pdflatex -interaction nonstopmode -halt-on-error -file-line-error -output-directory="+ this.workDir +" -aux-directory="+ this.workDir +" "+ texPath);
 		try 
 		{
 			p.waitFor();
