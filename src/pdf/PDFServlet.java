@@ -93,7 +93,7 @@ public class PDFServlet extends HttpServlet {
 				"");
 		
 		//delete files older than 1h
-		File[] listFiles = pdftemp.listFiles();           
+		File[] listFiles = pdftemp.listFiles();
 	    long purgeTime = System.currentTimeMillis() - (60 * 60 * 1000);
 	    for(File listFile : listFiles) 
 	    {
