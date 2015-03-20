@@ -43,7 +43,7 @@
                     <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
                     <button id="submit">Übernehmen</button>
                 </div>
-            </div>    
+            </div>
                 
             <div class="new-element">
                 <button class="btn-chapter">Neues Kapitel</button>
@@ -66,8 +66,21 @@
             editor = $('#new-block');
 
         function editBlock() {
-            e = $( this );          
-            editor.show();
+            e = $( this ); 
+            
+            var newBlock=$('<div class="element">' +
+                '<div class="checkbox"><input type="checkbox" name="choose" value="block-1" /></div>' +
+                '<div class="block">' +
+                '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>' 
+                '    <div><label for="desc">Beschreibung:</label><br />' +
+                '    <textarea name="desc" class="block-text"></textarea></div>' +
+                '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>' +
+                '    <button id="submit">Übernehmen</button>' +
+                '</div>' +
+            '</div>');
+            
+            e.prepend(newBlock);
+            /*editor.show();
             
             if(e.attr('data-title')) {
                 $('.block-title').val( e.data('title') );
@@ -79,7 +92,7 @@
                 $('.block-title').val('');
                 $('.block-text').val('');
                 $('.block-tags').val('');
-            }
+            }*/
         }
         
         function accept() {
@@ -100,7 +113,7 @@
             $( this ).toggleClass('big');
         });
 
-        $('#new-block > button').click( accept );
+        //$('#new-block > button').click( accept );
 
         $('.btn-block').click(function() {
             editBlock.call( null );
