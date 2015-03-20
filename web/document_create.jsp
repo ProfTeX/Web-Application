@@ -10,7 +10,7 @@
     </head>
     <nav>
         <div class="logo">ProfTeX</div>
-        <div class="threebars"><div></div></div>
+        <a href ="user_config.jsp"><span class="threebars"><div></div></span></a>
     </nav>
     <div id="content">
         <div id="left">
