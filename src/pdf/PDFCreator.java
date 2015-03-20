@@ -82,7 +82,7 @@ public class PDFCreator
 
 			Files.move(Paths.get(outPath), Paths.get(targetPath));
 			
-			this.recursiveDelete(new File(this.workDir));
+			PDFCreator.recursiveDelete(new File(this.workDir));
 			
 			return targetPath;
 			
