@@ -7,7 +7,7 @@
 	
 	<nav>
 		<div class="logo">ProfTeX</div>
-		<div class="threebars"><div></div></div>
+		<a href ="user_config.jsp"><span class="threebars"><div></div></span></a>
 	</nav>
 	
 	<br><br><br><br><br>
