@@ -18,6 +18,9 @@
             <img src="beispiel.jpg" />
             <img src="beispiel.jpg" />
             <img src="beispiel.jpg" />
+            <div id="upload">
+            	<input type="file" value="Bild hochladen"/>
+            </div>
         </div>
         <div id="right">
             <div class="chapter-heading">1. Das ist eine Überschrift</div>

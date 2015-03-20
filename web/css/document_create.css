@@ -139,3 +139,19 @@ body, html {
       bottom: 0;
       left: 51%; 
       z-index: 9999999;}
+      
+#upload {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 30px;
+	position: absolute;
+	padding: 5px;
+}
+	#upload input {
+		height: 20px;
+		background-color: #000;
+		border: none;
+		border-radius: 5px;
+		color: white;		
+	}
