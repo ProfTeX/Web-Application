@@ -34,17 +34,8 @@ public class Room implements Serializable {
 	@Column(name="Name")
 	private String name;
 
-	//bi-directional many-to-many association to Chapter
-	@ManyToMany
-	@JoinTable(
-		name="Room_has_Chapter"
-		, joinColumns={
-			@JoinColumn(name="Room_ID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Chapter_ID")
-			}
-		)
+	//bi-directional many-to-one association to Chapter
+	@OneToMany(mappedBy="room")
 	private List<Chapter> chapters;
 
 	//bi-directional many-to-many association to User
@@ -58,7 +49,11 @@ public class Room implements Serializable {
 			@JoinColumn(name="User_ID")
 			}
 		)
-	private List<User> users;
+	private List<User> users1;
+
+	//bi-directional many-to-many association to User
+	@ManyToMany(mappedBy="rooms2")
+	private List<User> users2;
 
 	public Room() {
 	}
@@ -111,12 +106,34 @@ public class Room implements Serializable {
 		this.chapters = chapters;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
+	public Chapter addChapter(Chapter chapter) {
+		getChapters().add(chapter);
+		chapter.setRoom(this);
+
+		return chapter;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public Chapter removeChapter(Chapter chapter) {
+		getChapters().remove(chapter);
+		chapter.setRoom(null);
+
+		return chapter;
+	}
+
+	public List<User> getUsers1() {
+		return this.users1;
+	}
+
+	public void setUsers1(List<User> users1) {
+		this.users1 = users1;
+	}
+
+	public List<User> getUsers2() {
+		return this.users2;
+	}
+
+	public void setUsers2(List<User> users2) {
+		this.users2 = users2;
 	}
 
 }

@@ -31,13 +31,14 @@ public class Chapter implements Serializable {
 	@Column(name="updated_at")
 	private Date updatedAt;
 
+	//bi-directional many-to-one association to Room
+	@ManyToOne
+	@JoinColumn(name="Room_ID")
+	private Room room;
+
 	//bi-directional many-to-many association to Snippet
 	@ManyToMany(mappedBy="chapters")
 	private List<Snippet> snippets;
-
-	//bi-directional many-to-many association to Room
-	@ManyToMany(mappedBy="chapters")
-	private List<Room> rooms;
 
 	public Chapter() {
 	}
@@ -74,20 +75,20 @@ public class Chapter implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public Room getRoom() {
+		return this.room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
 	public List<Snippet> getSnippets() {
 		return this.snippets;
 	}
 
 	public void setSnippets(List<Snippet> snippets) {
 		this.snippets = snippets;
-	}
-
-	public List<Room> getRooms() {
-		return this.rooms;
-	}
-
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
 	}
 
 }
