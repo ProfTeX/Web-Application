@@ -3,7 +3,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="tag")
@@ -17,24 +19,18 @@ public class Tag implements Serializable {
 	private int id;
 	@Column(name="Name")
 	private String name;
-	//@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_at")
 	private Date createdAt;
-	//@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_at")
 	private Date updatedAt;
-	/*bi-directional many-to-many association to Snippet
-	@ManyToMany
-	@JoinTable(
-		name="Snippet_has_Tag"
-		, joinColumns={
-			@JoinColumn(name="Tag_ID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Snippet_ID")
-			}
-		)
-	private List<Snippet> snippets;*/
+	
+	
+	//bi-directional many-to-many association to Snippet
+	@ManyToMany(fetch = FetchType.LAZY) 
+	@JoinTable(name="snippet_has_tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	private List<Snippet> snippets = new ArrayList<Snippet>();
 
 
 	public int getId() {
@@ -65,13 +61,21 @@ public class Tag implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	/*public List<Snippet> getSnippets() {
+	public List<Snippet> getSnippets() {
 		return this.snippets;
 	}
-
 	public void setSnippets(List<Snippet> snippets) {
 		this.snippets = snippets;
-	}*/
+	}
+	
+	public Snippet addSnippet(Snippet snippet){
+		this.snippets.add(snippet);
+		return snippet;
+	}
+	public Snippet removeSnippet(Snippet snippet){
+		this.snippets.remove(snippet);
+		return snippet;
+	}
 	
 	public Tag() {
 	}

@@ -3,6 +3,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +40,11 @@ public class Snippet implements Serializable {
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	
-	/*//bi-directional many-to-many association to Tag
-	@ManyToMany(mappedBy="snippets")
-	private List<Tag> tags;*/
+	//bi-directional many-to-many association to Tag
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name="snippet_has_tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	
 	public int getId() {
@@ -93,13 +98,21 @@ public class Snippet implements Serializable {
 		return chapter;
 	}	
 	
-	/*public List<Tag> getTags() {
+	public List<Tag> getTags() {
 		return this.tags;
 	}
-
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
-	}*/
+	}
+	
+	public Tag addTag(Tag tag){
+		this.tags.add(tag);
+		return tag;
+	}
+	public Tag removeTag(Tag tag){
+		this.tags.remove(tag);
+		return tag;
+	}
 	
 	public Snippet() {
 	}
