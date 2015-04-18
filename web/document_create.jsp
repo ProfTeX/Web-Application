@@ -25,7 +25,7 @@
         </div>
         <div id="right">
             <div id="tag-filter">
-                <select multiple data-placeholder="Auswählen...">
+                <select multiple data-placeholder="Filter-Tags auswählen...">
                     <option value="beispiel">beispiel</option>
                     <option value="beweis">beweis</option>
                     <option value="definition">definition</option>
@@ -39,7 +39,7 @@
                 <div class="checkbox"><input type="checkbox" name="choose" value="chapter-1" /></div>
                 <div class="block">
                     <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="Lorem ipsum" /><br /></div>
-                    <button class="submit">Übernehmen</button><button class="delete">Löschen</button>
+                    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                     <div><label for="desc">Beschreibung:</label><br />
                     <textarea name="desc" class="block-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</textarea></div>
                     <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" value="beweis, vl1" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
-                    <button class="submit">Übernehmen</button><button class="delete">Löschen</button>
+                    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>
                 </div>
             </div>
                 
@@ -83,7 +83,7 @@
                 '    <div><label for="desc">Beschreibung:</label><br />' +
                 '    <textarea name="desc" class="block-text"></textarea></div>' +
                 '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>' +
-                '    <button class="submit">Übernehmen</button><button class="delete">Löschen</button>' +
+                '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                 '</div>' +
             '</div>');
             
@@ -95,14 +95,20 @@
             
             
             var newChapter=$('<div class="element chapter">' +
-                '<div class="checkbox"><input type="checkbox" name="choose" value="chapter-1" /></div>' +
+                '<div class="checkbox"><input type="checkbox" name="choose" value="chapter-n" /></div>' +
                 '<div class="block">' +
                 '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="" /><br /></div>' +
-                '    <button class="submit">Übernehmen</button><button class="delete">Löschen</button>' +
+                '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                 '</div>' +
             '</div>');
             
             e.after(newChapter);
+        }
+        
+        function remove() {
+            e = $(this);
+            console.log(e);
+            e.parent().parent().remove();
         }
         
         function accept() {
@@ -118,10 +124,12 @@
             no_results_text: "Der Tag existiert bislang nicht!"
         });
 
-        $('.block > button.submit').click( accept );
-
-        $('.btn-block').click( newSnippet );
+        $('#right').on('click', 'button.submit', accept);
         
-        $('.btn-chapter').click( newChapter );
+        $('#right').on('click', 'button.remove', remove);
+
+        $('.btn-block').on('click', newSnippet);
+        
+        $('.btn-chapter').on('click', newChapter);
     </script>
 </html>
