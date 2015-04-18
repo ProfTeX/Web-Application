@@ -30,13 +30,13 @@ public class SnippetAccess {
 		}
 	}
 	
-	public Snippet getSnippet(){
+	public Snippet getSnippetById(Integer snippetId){
 		try
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
 
-			Snippet snippet = (Snippet)session.get(Snippet.class, 1);
+			Snippet snippet = (Snippet)session.get(Snippet.class, snippetId);
 			
 			transaction.commit();
 			return snippet;
