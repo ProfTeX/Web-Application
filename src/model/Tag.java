@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="tag")
+@Table(name="Tag")
 public class Tag implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
