@@ -68,3 +68,6 @@ local.properties
 ### Sass ###
 .sass-cache
 *.css.map
+
+### Hibernate ###
+src/hibernate.cfg.xml
