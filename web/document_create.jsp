@@ -105,6 +105,16 @@
             e.after(newChapter);
         }
         
+        function markChapter() {
+            e = $(this).parent();
+            var newStatus = e.find('.checkbox input').prop('checked');
+            
+            while(e.next().hasClass('snippet')) {
+                e = e.next();
+                e.find('.checkbox input').prop('checked', newStatus);
+            }
+        } 
+        
         function remove() {
             e = $(this);
             console.log(e);
@@ -124,9 +134,11 @@
             no_results_text: "Der Tag existiert bislang nicht!"
         });
 
-        $('#right').on('click', 'button.submit', accept);
+        $('#right').on('click', '.block button.submit', accept);
         
-        $('#right').on('click', 'button.remove', remove);
+        $('#right').on('click', '.block button.remove', remove);
+        
+        $('#right').on('click', '.chapter .checkbox', markChapter);
 
         $('.btn-block').on('click', newSnippet);
         
