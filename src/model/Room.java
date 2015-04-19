@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="room")
+@Table(name="Room")
 public class Room implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class Room implements Serializable {
 	
 	//bi-directional many-to-many association to User
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name="user_has_room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
+	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
 	private List<User> users = new ArrayList<User>();
 	
 	

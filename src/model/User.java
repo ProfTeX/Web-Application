@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="user")
+@Table(name="User")
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class User implements Serializable {
 	
 	//bi-directional many-to-many association to Room
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name="user_has_room", joinColumns={@JoinColumn(name="User_ID")}, inverseJoinColumns={@JoinColumn(name="Room_ID")})
+	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="User_ID")}, inverseJoinColumns={@JoinColumn(name="Room_ID")})
 	private List<Room> rooms = new ArrayList<Room>();
 
 

@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="snippet")
+@Table(name="Snippet")
 public class Snippet implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class Snippet implements Serializable {
 	//bi-directional many-to-many association to Chapter
 	//, joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")}
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name="chapter_has_snippet", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")})
+	@JoinTable(name="Chapter_has_Snippet", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")})
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	

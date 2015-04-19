@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="tag")
+@Table(name="Tag")
 public class Tag implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
