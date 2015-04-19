@@ -70,24 +70,6 @@ public class Room implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	/*public List<Chapter> getChapters() {
-		return this.chapters;
-	}
-	public void setChapters(List<Chapter> chapters) {
-		this.chapters = chapters;
-	}
-
-	/*public Chapter addChapter(Chapter chapter) {
-		this.chapters.add(chapter);
-		chapter.setRoom(this);
-		return chapter;
-	}
-	public Chapter removeChapter(Chapter chapter) {
-		this.chapters.remove(chapter);
-		chapter.setRoom(null);
-		return chapter;
-	}*/
-
 	public List<User> getUsers() {
 		return this.users;
 	}

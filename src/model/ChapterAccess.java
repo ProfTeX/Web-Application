@@ -1,8 +1,12 @@
 package model;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 
 public class ChapterAccess {
@@ -31,16 +35,19 @@ public class ChapterAccess {
 		}
 	}
 	
-	public Chapter getChapter(){
+	public List<Chapter> getChaptersByRoomId(Integer roomId){
 		try
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
 
-			Chapter chapter = (Chapter)session.get(Chapter.class, 1);
+			Criteria criteria = session.createCriteria(Chapter.class);
+			criteria.add(Restrictions.eq("roomId", roomId));
+			@SuppressWarnings("unchecked")
+			List<Chapter> chapters = (List<Chapter>) criteria.list();
 			
 			transaction.commit();
-			return chapter;
+			return chapters;
 			
 		}
 		catch(Exception e)

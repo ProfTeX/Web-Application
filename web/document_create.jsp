@@ -4,7 +4,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>ProfTeX - Dokument bearbeiten</title>
-        <link rel="stylesheet" type="text/css" href="css/document_create.css">
+        <link href="css/document_create.css" rel="stylesheet" type="text/css"/>
+        <link href="css/chosen.css" rel="stylesheet" type="text/css"/>
 	<script src="js/pdf.js"></script>
 
     </head>
@@ -23,28 +24,33 @@
             </div>
         </div>
         <div id="right">
-            <div class="chapter-heading">1. Das ist eine Überschrift</div>
-            <div class="chapter-subheading">1.1 Das ist eine Unterüberschrift</div>
+            <div id="tag-filter">
+                <select multiple data-placeholder="Filter-Tags auswählen...">
+                    <option value="beispiel">beispiel</option>
+                    <option value="beweis">beweis</option>
+                    <option value="definition">definition</option>
+                    <option value="lösung">lösung</option>
+                    <option value="übung">übung</option>
+                    <option value="vl1">vl1</option>
+                    <option value="vl2">vl2</option>
+                </select>
+            </div>
+            <div class="element chapter">
+                <div class="checkbox"><input type="checkbox" name="choose" value="chapter-1" /></div>
+                <div class="block">
+                    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="Lorem ipsum" /><br /></div>
+                    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>
+                </div>
+            </div>
 
-            <div class="element">
-                <div class="checkbox"><input type="checkbox" name="choose" value="block-1" /></div>
+            <div class="element snippet">
+                <div class="checkbox"><input type="checkbox" name="choose" value="snippet-1" /></div>
                 <div class="block">
                     <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="Lorem ipsum" /><br /></div>
                     <div><label for="desc">Beschreibung:</label><br />
                     <textarea name="desc" class="block-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</textarea></div>
                     <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" value="beweis, vl1" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
-                    <button id="submit">Übernehmen</button>
-                </div>
-            </div>
-            
-            <div class="element">
-                <div class="checkbox"><input type="checkbox" name="choose" value="block-1" /></div>
-                <div class="block">
-                    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>
-                    <div><label for="desc">Beschreibung:</label><br />
-                    <textarea name="desc" class="block-text"></textarea></div>
-                    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
-                    <button id="submit">Übernehmen</button>
+                    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>
                 </div>
             </div>
                 
@@ -63,63 +69,67 @@
         </div>
 
     </div>
-    <script type="text/javascript" src="js/jquery.min.js" ></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/chosen.jquery.min.js" type="text/javascript"></script>
     <script type = "text/javascript">
-        var doc = $('#doc'),
-            editor = $('#new-block');
-
-        function editBlock() {
-            e = $( this ); 
+        function newSnippet() {
+            e = $('#right .element').last();
             
-            var newBlock=$('<div class="element">' +
-                '<div class="checkbox"><input type="checkbox" name="choose" value="block-1" /></div>' +
+            
+            var newSnippet=$('<div class="element snippet">' +
+                '<div class="checkbox"><input type="checkbox" name="choose" value="chapter-n" /></div>' +
                 '<div class="block">' +
-                '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>' 
+                '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>' +
                 '    <div><label for="desc">Beschreibung:</label><br />' +
                 '    <textarea name="desc" class="block-text"></textarea></div>' +
                 '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>' +
-                '    <button id="submit">Übernehmen</button>' +
+                '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                 '</div>' +
             '</div>');
             
-            e.prepend(newBlock);
-            /*editor.show();
+            e.after(newSnippet);
+        }
+        
+        function newChapter() {
+            e = $('#right .element').last();
             
-            if(e.attr('data-title')) {
-                $('.block-title').val( e.data('title') );
-                $('.block-text').val( e.html() );
-                $('.block-tags').val( e.data('tags') );
-                
-                e.remove();
-            } else {
-                $('.block-title').val('');
-                $('.block-text').val('');
-                $('.block-tags').val('');
-            }*/
+            
+            var newChapter=$('<div class="element chapter">' +
+                '<div class="checkbox"><input type="checkbox" name="choose" value="chapter-n" /></div>' +
+                '<div class="block">' +
+                '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="" /><br /></div>' +
+                '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
+                '</div>' +
+            '</div>');
+            
+            e.after(newChapter);
+        }
+        
+        function remove() {
+            e = $(this);
+            console.log(e);
+            e.parent().parent().remove();
         }
         
         function accept() {
-            var newBlock = $('<p>');
-
-            newBlock.data('title', $('.block-title').val());
-            newBlock.data('tags', $('.block-tags').val());
-            newBlock.html( $('.block-text').val() );
-
-            newBlock.click( editBlock );
-
-            doc.append(newBlock);
-
-            editor.hide();
+            console.log("Accept works!");
         }
 
         $('#left > img').click(function() {
             $( this ).toggleClass('big');
         });
 
-        //$('#new-block > button').click( accept );
-
-        $('.btn-block').click(function() {
-            editBlock.call( null );
+        $('#tag-filter select').chosen({
+            width: "100%",
+            no_results_text: "Der Tag existiert bislang nicht!"
         });
+
+        $('#right').on('click', 'button.submit', accept);
+        
+        $('#right').on('click', 'button.remove', remove);
+
+        $('.btn-block').on('click', newSnippet);
+        
+        $('.btn-chapter').on('click', newChapter);
     </script>
 </html>

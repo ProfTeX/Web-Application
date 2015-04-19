@@ -27,12 +27,7 @@ public class Chapter implements Serializable {
 	private Date updatedAt;
 	@Column(name="Room_ID")
 	private int roomId;
-	
-	
-	//bi-directional association to Room
-	//@ManyToOne(fetch=FetchType.LAZY)
-	//@JoinColumn(name="Room_ID", insertable=false, updatable=false)
-	//private Room room;
+
 	
 	//bi-directional association to Snippet
 	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
@@ -75,15 +70,6 @@ public class Chapter implements Serializable {
 		this.roomId = roomId;
 	}
 	
-	/*public Room getRoom() {
-		return this.room;
-	}
-	public void setRoom(Room room) {
-		if (room.getId() == 0) System.out.println("RaumId ist nicht gesetzt.");
-		this.roomId = room.getId();
-		this.room = room;
-	}*/
-
 	public List<Snippet> getSnippets() {
 		return this.snippets;
 	}

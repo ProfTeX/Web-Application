@@ -1,8 +1,10 @@
 package model;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 
 public class TagAccess {
@@ -30,13 +32,15 @@ public class TagAccess {
 		}
 	}
 	
-	public Tag getTag(){
+	public Tag getTagByName(String tagName){
 		try
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
 
-			Tag tag = (Tag)session.get(Tag.class, 1);
+			Criteria criteria = session.createCriteria(Tag.class);
+			criteria.add(Restrictions.eq("name", tagName));
+			Tag tag = (Tag) criteria.list().get(0);
 			
 			transaction.commit();
 			return tag;
