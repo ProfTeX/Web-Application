@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,6 +20,12 @@ public class TagAccess {
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
+			
+			if (tag.getId() == 0)
+			{
+				tag.setCreatedAt(new Date());
+			}
+			tag.setUpdatedAt(new Date());
 
 			session.saveOrUpdate(tag);
 			

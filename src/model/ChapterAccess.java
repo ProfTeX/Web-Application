@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -20,6 +21,19 @@ public class ChapterAccess {
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
+			
+			if(chapter.getId() == 0)
+			{
+				chapter.setCreatedAt(new Date());
+			}
+			chapter.setUpdatedAt(new Date());
+			
+			for (Snippet snippet : chapter.getSnippets()) {
+				if (snippet.getId() == 0){
+					snippet.setCreatedAt(new Date());
+				}
+				snippet.setUpdatedAt(new Date());
+			}
 			
 			session.saveOrUpdate(chapter);
 			

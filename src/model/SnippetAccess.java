@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,6 +19,12 @@ public class SnippetAccess {
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
 
+			if (snippet.getId() == 0)
+			{
+				snippet.setCreatedAt(new Date());
+			}
+			snippet.setUpdatedAt(new Date());
+			
 			session.saveOrUpdate(snippet);
 			
 			transaction.commit();
