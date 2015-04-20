@@ -28,8 +28,8 @@ var un = document.loginform.username.value;
 var pw = document.loginform.pword.value;
 var valid = false;
 
-var unArray = ["Marco", "Penis", "Edwin"];
-var pwArray = ["SuperPW", "penis", ""];
+var unArray = ["Marco", "Edwin"];
+var pwArray = ["SuperPW", ""];
 
 for (var i=0; i <unArray.length; i++) {
 	if ((un == unArray[i]) && (pw == pwArray[i])) {
