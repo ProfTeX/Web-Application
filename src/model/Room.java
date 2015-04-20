@@ -66,7 +66,7 @@ public class Room implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 

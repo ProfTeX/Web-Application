@@ -53,4 +53,24 @@ public class TagAccess {
 		}
 	}
 	
+	public Boolean deleteTag(Tag tag){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(tag);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 }

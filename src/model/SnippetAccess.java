@@ -47,6 +47,26 @@ public class SnippetAccess {
 			System.out.println(e.getMessage());
 			return null;
 		}
+	}	
+	
+	public Boolean deleteSnippet(Snippet snippet){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(snippet);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 	
 }

@@ -49,6 +49,26 @@ public class RoomAccess {
 		}
 	}
 	
+	public Boolean deleteRoom(Room room){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(room);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 
 	
 }

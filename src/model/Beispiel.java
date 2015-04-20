@@ -37,13 +37,17 @@ public class Beispiel {
 		User user = ua.getUserByName("update");
 		user.setName("update");
 		ua.saveOrUpdateUser(user);*/
-
+		
+		/*How to delete a User
+		UserAccess ua = new UserAccess();
+		User user = ua.getUserByEmail("cre@e.test");
+		ua.deleteUser(user);*/
+		
 //ROOM		
 		/*How to create a Room
 		Room room = new Room();
 		room.setName("create");
 		room.setCourse("create");
-		room.setCreatedAt(new Date(2015, 4, 17));
 		room.setDescription("create");		
 		UserAccess ua = new UserAccess();
 		User user = ua.getUserByName("create");
@@ -89,6 +93,13 @@ public class Beispiel {
 		List<Chapter> chapters = ca.getChaptersByRoomId(user.getRooms().get(0).getId());
 		chapters.get(0).setName("update");
 		ca.saveOrUpdateChapter(chapters.get(0));*/
+		
+		/*How to delete a Chapter
+		UserAccess ua = new UserAccess();
+		User user = ua.getUserByName("create");
+		ChapterAccess ca = new ChapterAccess();
+		List<Chapter> chapters = ca.getChaptersByRoomId(user.getRooms().get(0).getId());
+		ca.deleteChapter(chapters.get(0));*/
 		
 //Snippet
 		/*How to create a Snippet

@@ -29,7 +29,7 @@ public class Tag implements Serializable {
 	
 	//bi-directional many-to-many association to Snippet
 	@ManyToMany(fetch = FetchType.LAZY) 
-	@JoinTable(name="snippet_has_tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
 	private List<Snippet> snippets = new ArrayList<Snippet>();
 
 
@@ -50,14 +50,14 @@ public class Tag implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

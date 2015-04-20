@@ -27,6 +27,8 @@ public class Chapter implements Serializable {
 	private Date updatedAt;
 	@Column(name="Room_ID")
 	private int roomId;
+	@Column(name="Position")
+	private int position;
 
 	
 	//bi-directional association to Snippet
@@ -38,7 +40,7 @@ public class Chapter implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	void setId(int id) {
 		this.id = id;
 	}
 
@@ -52,14 +54,14 @@ public class Chapter implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
@@ -68,6 +70,13 @@ public class Chapter implements Serializable {
 	}
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
+	}
+	
+	public int getPosition() {
+		return this.position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
 	}
 	
 	public List<Snippet> getSnippets() {

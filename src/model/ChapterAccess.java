@@ -58,4 +58,24 @@ public class ChapterAccess {
 		}
 	}
 	
+	public Boolean deleteChapter(Chapter chapter){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(chapter);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 }

@@ -31,6 +31,8 @@ public class Snippet implements Serializable {
 	@Column(name="updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
+	@Column(name="Position")
+	private int position;
 	
 	
 	//bi-directional many-to-many association to Chapter
@@ -43,7 +45,7 @@ public class Snippet implements Serializable {
 	//bi-directional many-to-many association to Tag
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(name="snippet_has_tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
+	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
 	private List<Tag> tags = new ArrayList<Tag>();
 
 	
@@ -71,15 +73,22 @@ public class Snippet implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public int getPosition() {
+		return this.position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	public List<Chapter> getChapters() {
