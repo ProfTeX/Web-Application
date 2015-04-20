@@ -36,7 +36,6 @@ public class ChapterAccess {
 			return false;
 		}
 	}
-	@Transactional
 	public List<Chapter> getChaptersByRoomId(Integer roomId){
 		try
 		{

@@ -43,7 +43,7 @@ public class Snippet implements Serializable {
 	//bi-directional many-to-many association to Tag
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(name="snippet_has_tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
+	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
 	private List<Tag> tags = new ArrayList<Tag>();
 
 	

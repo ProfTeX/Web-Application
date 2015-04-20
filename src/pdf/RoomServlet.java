@@ -99,8 +99,8 @@ public class RoomServlet extends HttpServlet {
 		chaptersStr += "]";
 		
 		String returnStr = "[{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":\"" 
-					+ room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":\"" 
-					+ chaptersStr + "\"}]";
+					+ room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":" 
+					+ chaptersStr + "}]";
 		
 		response.getWriter().write(returnStr);
 	}
