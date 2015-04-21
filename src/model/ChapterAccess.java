@@ -48,6 +48,26 @@ public class ChapterAccess {
 			return false;
 		}
 	}
+
+	public Chapter getChapterById(Integer chapterId){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+
+			Chapter chapter = (Chapter) session.get(Chapter.class, chapterId);
+			
+			transaction.commit();
+			return chapter;
+			
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 	
 	public List<Chapter> getChaptersByRoomId(Integer roomId){
 		try
