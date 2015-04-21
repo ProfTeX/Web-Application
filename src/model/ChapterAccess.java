@@ -2,6 +2,7 @@ package model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -80,6 +81,12 @@ public class ChapterAccess {
 			@SuppressWarnings("unchecked")
 			List<Chapter> chapters = (List<Chapter>) criteria.list();
 			
+			for (Chapter chapter : chapters)
+			{
+				chapters.removeIf(haveSameId(chapter.getId()));
+				chapters.add(chapter);
+			}
+			
 			transaction.commit();
 			return chapters;
 			
@@ -91,6 +98,10 @@ public class ChapterAccess {
 			return null;
 		}
 	}
+	
+	public static Predicate<Chapter> haveSameId(Integer id) {
+        return p -> p.getId() == id;
+    }
 	
 	public Boolean deleteChapter(Chapter chapter){
 		try
