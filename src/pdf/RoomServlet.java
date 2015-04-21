@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 
 import model.*;
 
@@ -111,6 +111,7 @@ public class RoomServlet extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("name") == null) {
 			response.sendError(400, "'name' parameter missing!");
+			return;
 		}
 		/*else
 		{
@@ -140,10 +141,12 @@ public class RoomServlet extends HttpServlet {
 		User user = ua.getUserByName("test");
 		if (user == null) {
 			response.sendError(400, "User not found!");
+			return;
 		}
 		user.addRoom(room);
 		ua.saveOrUpdateUser(user);
-		//System.out.println(room.getUsers());
+		
+		response.getWriter().write("true");
 	}
 
 	/**
