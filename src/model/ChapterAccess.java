@@ -98,8 +98,7 @@ public class ChapterAccess {
 			return null;
 		}
 	}
-	
-	public static Predicate<Chapter> haveSameId(Integer id) {
+	private static Predicate<Chapter> haveSameId(Integer id) {
         return p -> p.getId() == id;
     }
 	
