@@ -3,6 +3,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,9 +31,13 @@ public class Room implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 	
+	@OneToMany(mappedBy="room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(FetchMode.SELECT)
+	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	//bi-directional many-to-many association to User
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
 	private List<User> users = new ArrayList<User>();
 	
@@ -69,7 +76,23 @@ public class Room implements Serializable {
 	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
+	
+	public List<Chapter> getChapters(){
+		return this.chapters;
+	}
+	public void setChapters(List<Chapter> chaperts){
+		this.chapters = chaperts;
+	}
+	
+	public Chapter addChapter(Chapter chapter){
+		this.chapters.add(chapter);
+		return chapter;
+	}
+	public Chapter removeChapter(Chapter chapter){
+		this.chapters.remove(chapter);
+		return chapter;
+	}
+	
 	public List<User> getUsers() {
 		return this.users;
 	}

@@ -59,6 +59,10 @@ public class Beispiel {
 		UserAccess ua = new UserAccess();
 		User user = ua.getUserByName("create");
 		System.out.println(user.getRooms().get(0).getCreatedAt());*/
+		//Alternative
+		RoomAccess ra = new RoomAccess();
+		Room room = ra.getRoomById(4);
+		System.out.println(room.getChapters());
 		
 		/*How to update a Room
 		RoomAccess ra = new RoomAccess();

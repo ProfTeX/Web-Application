@@ -3,6 +3,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +32,7 @@ public class Tag implements Serializable {
 	
 	//bi-directional many-to-many association to Snippet
 	@ManyToMany(fetch = FetchType.LAZY) 
+	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
 	private List<Snippet> snippets = new ArrayList<Snippet>();
 
