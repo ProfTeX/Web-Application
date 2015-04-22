@@ -38,11 +38,15 @@ public class SnippetServlet extends HttpServlet {
 		}
 		
 		RoomAccess ra = new RoomAccess();
-		ChapterAccess ca = new ChapterAccess();
+		//ChapterAccess ca = new ChapterAccess();
 		
-		//Room room = ra.getRoomById(Integer.parseInt(request.getParameter("room")));
-		List<Chapter> chapters = ca.getChaptersByRoomId(Integer.parseInt(request.getParameter("room")));
-		System.out.println("chapter " + chapters.size());
+		Room room = ra.getRoomById(Integer.parseInt(request.getParameter("room")));
+		if(room == null)
+		{
+			response.sendError(404, "Room with id " + request.getParameter("room") + " not found!");
+			return;
+		}
+		List<Chapter> chapters = room.getChapters();
 		String[] tags, idsStr;
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		if(request.getParameter("tags") != null)
@@ -79,31 +83,38 @@ public class SnippetServlet extends HttpServlet {
 			for(Snippet snippet : snippets)
 			{
 				boolean contains = false;
-				
-				if(ids.contains(snippet.getId()))
-				{
-					contains = true;
-					System.out.println("contains id");
-				}
-				
 				List<Tag> snippetTags = snippet.getTags();
-				for(Tag snippetTag : snippetTags)
+				
+				if(!(ids.isEmpty() && tags.length == 0))
 				{
-					if(contains)
+					if(ids.contains(snippet.getId()))
 					{
-						break;
+						contains = true;
 					}
-					for(String tag : tags)
+					
+					for(Tag snippetTag : snippetTags)
 					{
-						if(snippetTag.getName().toLowerCase() == tag.toLowerCase().trim())
+						if(contains)
 						{
-							contains = true;
-							System.out.println("contains tag " + tag);
 							break;
+						}
+						for(String tag : tags)
+						{
+							System.out.println("tagParam: " + tag.toLowerCase().trim());
+							System.out.println("snippetTag: " + snippetTag.getName().toLowerCase());
+							if(snippetTag.getName().toLowerCase().trim().equals(tag.toLowerCase().trim()))
+							{
+								contains = true;
+								System.out.println("contains tag " + tag);
+								break;
+							}
 						}
 					}
 				}
-				
+				else
+				{
+					contains = true;
+				}
 				if(contains)
 				{
 					String tagsStr = "[";
@@ -120,11 +131,9 @@ public class SnippetServlet extends HttpServlet {
 					
 					tagsStr += "]";
 					
-					result += "{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + "},";
+					result += "{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\": " + snippet.getPosition()  + "},";
 				}
 			}
-			
-			
 		}
 		
 		if(result.lastIndexOf(",") != -1)
@@ -142,21 +151,106 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().write("test");
+		if(request.getParameter("id") == null || request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("tags") == null || request.getParameter("position") == null)
+		{
+			response.sendError(400, "One or more parameters missing!");
+			return;
+		}
+		
+		SnippetAccess sa = new SnippetAccess();
+		TagAccess ta = new TagAccess();
+		Snippet snippet = sa.getSnippetById(Integer.parseInt(request.getParameter("id")));
+		if(snippet == null)
+		{
+			response.sendError(404, "Snippet with id " + request.getParameter("id") + " not found!");
+			return;
+		}
+		
+		String[] tags;
+		tags = request.getParameter("tags").split(",");
+		
+		snippet.setTitle(request.getParameter("title"));
+		snippet.setContent(request.getParameter("content"));
+		
+		for(String tagStr : tags)
+		{
+			Tag tag = ta.getTagByName(tagStr);
+			if(tag != null && !snippet.getTags().contains(tag))
+			{
+				snippet.addTag(tag);
+			}
+			else if(tag == null)
+			{
+				response.sendError(404, "Tag " + tagStr + " does not exist!");
+				return;
+			}
+		}
+		
+		sa.saveOrUpdateSnippet(snippet);
+		
+		response.getWriter().write("true");
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("tags") == null || request.getParameter("position") == null)
+		{
+			response.sendError(400, "One or more parameters missing!");
+			return;
+		}
+		
+		TagAccess ta = new TagAccess();
+		SnippetAccess sa = new SnippetAccess();
+		
+		Snippet snippet = new Snippet();
+		snippet.setTitle(request.getParameter("title"));
+		snippet.setContent(request.getParameter("content"));
+		snippet.setPosition(Integer.parseInt(request.getParameter("position")));
+		
+		String[] tags;
+		tags = request.getParameter("tags").split(",");
+		
+		for(String tagStr : tags)
+		{
+			Tag tag = ta.getTagByName(tagStr);
+			if(tag != null)
+			{
+				snippet.addTag(tag);
+			}
+			else if(tag == null)
+			{
+				response.sendError(404, "Tag " + tagStr + " does not exist!");
+				return;
+			}
+		}
+		
+		sa.saveOrUpdateSnippet(snippet);
+		
+		response.getWriter().write("{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":" + snippet.getContent() + "\", \"tags\":[]}");
 	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("id") == null) {
+			response.sendError(400, "'id' parameter missing!");
+			return;
+		}
+		
+		SnippetAccess sa = new SnippetAccess();
+		Snippet snippet = sa.getSnippetById(Integer.parseInt(request.getParameter("id")));
+		
+		if(snippet == null)
+		{
+			response.sendError(404, "Snippet with id " + request.getParameter("id") + " not found!");
+			return;
+		}
+		
+		response.getWriter().write(sa.deleteSnippet(snippet).toString());
 	}
 
 }
