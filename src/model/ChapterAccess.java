@@ -1,6 +1,9 @@
 package model;
 
+import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+//import java.util.function.Predicate;
 
 import javax.transaction.Transactional;
 
@@ -23,6 +26,19 @@ public class ChapterAccess {
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
 			
+			if(chapter.getId() == 0)
+			{
+				chapter.setCreatedAt(new Date());
+			}
+			chapter.setUpdatedAt(new Date());
+			
+			for (Snippet snippet : chapter.getSnippets()) {
+				if (snippet.getId() == 0){
+					snippet.setCreatedAt(new Date());
+				}
+				snippet.setUpdatedAt(new Date());
+			}
+			
 			session.saveOrUpdate(chapter);
 			
 			transaction.commit();
@@ -36,6 +52,25 @@ public class ChapterAccess {
 			return false;
 		}
 	}
+	public Chapter getChapterById(Integer chapterId){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+
+			Chapter chapter = (Chapter) session.get(Chapter.class, chapterId);
+			
+			transaction.commit();
+			return chapter;
+			
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 	public List<Chapter> getChaptersByRoomId(Integer roomId){
 		try
 		{
@@ -46,7 +81,6 @@ public class ChapterAccess {
 			criteria.add(Restrictions.eq("roomId", roomId));
 			@SuppressWarnings("unchecked")
 			List<Chapter> chapters = (List<Chapter>) criteria.list();
-			
 			transaction.commit();
 			return chapters;
 			
@@ -56,6 +90,25 @@ public class ChapterAccess {
 			if (transaction != null) transaction.rollback();
 			System.out.println(e.getMessage());
 			return null;
+		}
+	}	
+	public Boolean deleteChapter(Chapter chapter){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(chapter);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
 		}
 	}
 	

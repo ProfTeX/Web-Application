@@ -3,7 +3,6 @@ package pdf;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebInitParam;
@@ -88,7 +87,7 @@ public class RoomServlet extends HttpServlet {
 			
 			snippetsStr += "]";
 			
-			chaptersStr += "{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"room\":\"" + chapter.getRoomId() + "\", \"snippets\":" + snippetsStr + "},";
+			chaptersStr += "{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"room\":\"" + chapter.getRoom().getId() + "\", \"snippets\":" + snippetsStr + "},";
 		}
 		
 		if(chaptersStr.lastIndexOf(",") != -1)
@@ -113,28 +112,9 @@ public class RoomServlet extends HttpServlet {
 			response.sendError(400, "'name' parameter missing!");
 			return;
 		}
-		/*else
-		{
-			name = request.getParameter("name");
-		}
-		if(request.getParameter("course") != null) {
-			course = request.getParameter("course");
-		}
-		else
-		{
-			course = "";
-		}
-		if(request.getParameter("description") != null) {
-			description = request.getParameter("description");	
-		}
-		else
-		{
-			description = "";
-		}*/
 		Room room = new Room();
 		room.setName(request.getParameter("name"));
 		room.setCourse(request.getParameter("course"));
-		room.setCreatedAt(new Date());
 		room.setDescription(request.getParameter("description"));
 				
 		UserAccess ua = new UserAccess();

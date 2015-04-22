@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,6 +20,12 @@ public class TagAccess {
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
+			
+			if (tag.getId() == 0)
+			{
+				tag.setCreatedAt(new Date());
+			}
+			tag.setUpdatedAt(new Date());
 
 			session.saveOrUpdate(tag);
 			
@@ -50,6 +58,26 @@ public class TagAccess {
 			if (transaction != null) transaction.rollback();
 			System.out.println(e.getMessage());
 			return null;
+		}
+	}
+	
+	public Boolean deleteTag(Tag tag){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(tag);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
 		}
 	}
 	
