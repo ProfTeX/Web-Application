@@ -38,6 +38,7 @@ public class Chapter implements Serializable {
 	private Room room;
 		
 	//bi-directional association to Snippet
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="Chapter_has_Snippet", joinColumns={@JoinColumn(name="Chapter_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
 	private List<Snippet> snippets = new ArrayList<Snippet>();
