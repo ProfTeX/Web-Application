@@ -1,11 +1,7 @@
 package model;
 
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
-//import java.util.function.Predicate;
-
-import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
