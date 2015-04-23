@@ -69,3 +69,42 @@ a.button:hover {
 a.button:active {
   font-weight: normal;
   text-decoration: none; }
+
+#popup {
+  display: none;
+  position: fixed;
+  text-align: center;
+  top: 20%;
+  left: 25%;
+  margin: 0 auto;
+  width: 50%;
+  height: 170px;
+  background-color: #000;
+  color: #FFF;
+}
+  #popup input[type=text] {
+    width: 90%;
+    height: 30px;
+    font-size: 20px;  height: 44px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+
+  #popup .button {
+    color: #000;
+    background-color: #FFF;
+    width: 90%;
+    margin: 10px auto;
+  }
+  #popup .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
