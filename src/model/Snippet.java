@@ -133,6 +133,6 @@ public class Snippet implements Serializable {
 	@Override
 	public String toString(){
 		ListToString<Tag> lts = new ListToString<Tag>();
-		return "{\"id\":\"" + this.id + "\", \"title\":\"" + this.title + "\", \"content\":\"" + this.content + "\", \"tags\":" + lts.listToString(this.tags) + ", \"position\": " + this.position + "}";
+		return "{\"id\":" + this.id + ", \"title\":\"" + this.title + "\", \"content\":\"" + this.content + "\", \"tags\":" + lts.listToString(this.tags) + ", \"position\":" + this.position + "}";
 	}
 }

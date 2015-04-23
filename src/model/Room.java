@@ -36,7 +36,7 @@ public class Room implements Serializable {
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	//bi-directional many-to-many association to User
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
 	private List<User> users = new ArrayList<User>();
@@ -110,5 +110,14 @@ public class Room implements Serializable {
 	}
 	
 	public Room() {
+	}
+	
+	@Override
+	public String toString(){
+		ListToString<Chapter> ltsChapter = new ListToString<Chapter>();
+		ListToString<User> ltsUser = new ListToString<User>();
+		return "[{\"id:\"" + this.id + ", \"name\":\"" + this.name + "\", \"course\":\"" 
+				+ this.course + "\", \"description\":\"" + this.description + "\", \"chapters\":" 
+				+ ltsChapter.listToString(this.chapters) + ", \"users\":" + ltsUser.listToString(this.users) + "}]";
 	}
 }

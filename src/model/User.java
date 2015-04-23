@@ -80,4 +80,9 @@ public class User implements Serializable {
 	
 	public User() {
 	}
+	
+	@Override
+	public String toString(){
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"email\":" + this.email + "}";
+	}
 }
