@@ -83,9 +83,17 @@ function remove() {
     e.parent().parent().remove();
 }
 
+function getBlocks() {
+    $.ajax({
+        url: ""
+    });
+}
+
 function accept() {
     console.log("Accept works!");
 }
+
+document.addEventListener("DOMContentLoaded", getBlocks);
 
 $('#left > img').click(function () {
     $(this).toggleClass('big');
