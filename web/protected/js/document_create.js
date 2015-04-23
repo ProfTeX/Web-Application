@@ -1,5 +1,3 @@
-var roomId = 0;
-
 function newSnippet() {
     var e = $('#tag-filter');
     var pos = 0;
@@ -94,7 +92,7 @@ function accept() {
 	            method: "POST",
 	            data: {
 	                name: block.find('.block-title').val(),
-	                room: ,
+	                room: room,
 	                snippets: snippets
 	            },
 	            statusCode: {
