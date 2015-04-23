@@ -73,8 +73,6 @@ public class SnippetServlet extends HttpServlet {
 			}
 		}
 		
-		//String result = "[";
-		
 		ArrayList<Snippet> resultList = new ArrayList<Snippet>();
 		
 		for(Chapter chapter : chapters)
@@ -119,35 +117,11 @@ public class SnippetServlet extends HttpServlet {
 				if(contains)
 				{
 					resultList.add(snippet);
-					/*String tagsStr = "[";
-					
-					for(Tag tag : snippetTags)
-					{
-						tagsStr += "{\"id\":" + tag.getId() + ", \"name\":\"" + tag.getName() + "\"},";
-					}
-					
-					if(tagsStr.lastIndexOf(",") != -1)
-					{
-						tagsStr = tagsStr.substring(0, tagsStr.lastIndexOf(","));
-					}
-					
-					tagsStr += "]";
-					
-					result += "{\"id\":" + snippet.getId() + ", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\":" + snippet.getPosition()  + "},";
-					*/
 				}
 			}
 		}
-		
-		/*if(result.lastIndexOf(",") != -1)
-		{
-			result = result.substring(0, result.lastIndexOf(","));
-		}
-		
-		result += "]";*/
-		
-		ListToString<Snippet> lts = new ListToString<Snippet>();
-		response.getWriter().write(lts.listToString(resultList));
+
+		response.getWriter().write(resultList.toString());
 		
 	}
 
@@ -224,7 +198,7 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("position") == null || request.getParameter("content") == null)
+		if(request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("position") == null || request.getParameter("chapter") == null)
 		{
 			response.sendError(400, "One or more mandatory parameters missing!");
 			return;
