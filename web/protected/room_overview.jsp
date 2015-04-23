@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>ProfTeX - Raeume</title>
-		<link rel="stylesheet" type="text/css" href="css/room_overview.css">
+		<link rel="stylesheet" type="text/css" href="../css/room_overview.css">
 	
 	</head>
 	
