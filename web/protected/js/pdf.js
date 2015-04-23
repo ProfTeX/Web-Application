@@ -13,14 +13,31 @@ function showpdf()
 	background: "#FFF"
     }); //.appendTo($("#doc").css("position", "relative"));
     
-   	$.ajax({
-   		url: "PDFServlet",
-   		}).done(function(result) 
-   				{
-   					$('.pdf-render').html(result);
-   					$('object.pdf_obj').css("width", $('div.pdf-div').width());
-   					$('object.pdf_obj').css("height", $('div.pdf-div').height() - $('button#closepdf').height());
-   				});
+    $.ajax({
+   		url: "../pdf",
+   		method: "GET",
+   		data: {
+        	ids: XXX
+   		},
+        statusCode: {
+            404: function() {
+            	Console.log('404');
+            },
+        	400: function() {
+            	Console.log('400');
+            },
+            200: function(data) {
+            	Console.log('200');
+                resolve(data);
+            }
+        }
+   	});
+//   		}).done(function(result) 
+//   				{
+//   					$('.pdf-render').html(result);
+//   					$('object.pdf_obj').css("width", $('div.pdf-div').width());
+//   					$('object.pdf_obj').css("height", $('div.pdf-div').height() - $('button#closepdf').height());
+//   				});
 }
 
 function closepdf()

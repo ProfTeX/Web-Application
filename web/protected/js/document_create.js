@@ -89,7 +89,7 @@ function remove() {
     var block = $(this).parent().parent();
     if (block.hasClass('chapter')) {
         $.ajax({
-            url: "../chapter/",
+            url: "../chapter",
             mimeType: "application/json",
             method: "DELETE",
             data: {
@@ -100,7 +100,7 @@ function remove() {
                     Console.log('404');
                 },
                 400: function () {
-                    Console.log('404');
+                    Console.log('400');
                 },
                 200: function (data) {
                     Console.log('200');
@@ -112,7 +112,7 @@ function remove() {
     }
     if (block.hasClass('snippet')) {
         $.ajax({
-            url: "../snippet/",
+            url: "../snippet",
             mimeType: "application/json",
             method: "DELETE",
             data: {
@@ -123,7 +123,7 @@ function remove() {
                     Console.log('404');
                 },
                 400: function () {
-                    Console.log('404');
+                    Console.log('400');
                 },
                 200: function (data) {
                     Console.log('200');
@@ -179,7 +179,7 @@ function accept() {
     if (block.hasClass('chapter')) {
         if (block.data('id') === "") {
             $.ajax({
-                url: "../chapter/",
+                url: "../chapter",
                 method: "PUT",
                 mimeType: "application/json",
                 data: {
@@ -192,7 +192,7 @@ function accept() {
                         Console.log('404');
                     },
                     400: function () {
-                        Console.log('404');
+                        Console.log('400');
                     },
                     200: function (data) {
                         Console.log('200');
@@ -203,7 +203,7 @@ function accept() {
         }
         else {
             $.ajax({
-                url: "../chapter/",
+                url: "../chapter",
                 method: "POST",
                 mimeType: "application/json",
                 data: {
@@ -216,7 +216,7 @@ function accept() {
                         Console.log('404');
                     },
                     400: function () {
-                        Console.log('404');
+                        Console.log('400');
                     },
                     200: function (data) {
                         Console.log('200');
@@ -229,7 +229,7 @@ function accept() {
     if (block.hasClass('snippet')) {
         if (block.data('id') === "") {
             $.ajax({
-                url: "../snippet/",
+                url: "../snippet",
                 method: "PUT",
                 mimeType: "application/json",
                 data: {
@@ -244,7 +244,7 @@ function accept() {
                         Console.log('404');
                     },
                     400: function () {
-                        Console.log('404');
+                        Console.log('400');
                     },
                     200: function (data) {
                         Console.log('200');
@@ -255,7 +255,7 @@ function accept() {
         }
         else {
             $.ajax({
-                url: "../snippet/",
+                url: "../snippet",
                 method: "POST",
                 mimeType: "application/json",
                 data: {
@@ -271,7 +271,7 @@ function accept() {
                         Console.log('404');
                     },
                     400: function () {
-                        Console.log('404');
+                        Console.log('400');
                     },
                     200: function (data) {
                         Console.log('200');

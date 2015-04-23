@@ -93,7 +93,7 @@ public class ChapterServlet extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("name") == null || request.getParameter("position") == null || request.getParameter("room") == null) 
 		{
-			response.sendError(400, "One or more parameters missing!");
+			response.sendError(400, "One or more parameters missing!" + request.getParameter("name") + request.getParameter("position")+request.getParameter("room"));
 			return;
 		}
 		
