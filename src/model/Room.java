@@ -36,10 +36,9 @@ public class Room implements Serializable {
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	//bi-directional many-to-many association to User
-	//@ManyToMany(fetch = FetchType.LAZY)
-	//@Fetch(FetchMode.SELECT)
-	//@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
-	@ManyToMany(mappedBy = "rooms")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@Fetch(FetchMode.SELECT)
+	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
 	private List<User> users = new ArrayList<User>();
 	
 	
@@ -111,5 +110,22 @@ public class Room implements Serializable {
 	}
 	
 	public Room() {
+	}
+	
+	@Override
+	public String toString(){
+		return "[{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"course\":\"" 
+				+ this.course + "\", \"description\":\"" + this.description + "\", \"chapters\":" 
+				+ this.chapters + ", \"users\":" + this.users + "}]";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Room)) return false;
+		if (((Room) other).getId() == 0) return false;
+		if (((Room) other).getId() == this.id) return true;
+		return false;
 	}
 }

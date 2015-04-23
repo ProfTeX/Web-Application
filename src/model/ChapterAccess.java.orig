@@ -2,6 +2,11 @@ package model;
 
 import java.util.Date;
 import java.util.List;
+<<<<<<< HEAD
+
+import javax.transaction.Transactional;
+=======
+>>>>>>> api
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;

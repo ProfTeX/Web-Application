@@ -1,10 +1,7 @@
 package pdf;
 
 import java.io.IOException;
-//import java.util.Date;
-import java.util.List;
 import javax.servlet.ServletException;
-//import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +38,6 @@ public class RoomServlet extends HttpServlet {
 		Integer roomId = Integer.parseInt(request.getParameter("id"));
 		
 		RoomAccess ra = new RoomAccess();
-		//ChapterAccess ca = new ChapterAccess();
 		
 		Room room = ra.getRoomById(roomId);
 		
@@ -50,60 +46,7 @@ public class RoomServlet extends HttpServlet {
 			response.sendError(400, "Room with ID " + roomId + " not found!");
 			return;
 		}
-		
-		String chaptersStr = "[";
-		
-		List<Chapter> chapters = room.getChapters();
-		
-		System.out.println(chapters.size());
-		
-		for(Chapter chapter : chapters)
-		{
-			List<Snippet> snippets = chapter.getSnippets();
-			String snippetsStr = "[";
-			
-			for(Snippet snippet : snippets)
-			{
-				String tagsStr = "[";
-				List<Tag> tags = snippet.getTags();
-				
-				for(Tag tag : tags)
-				{
-					tagsStr += "{\"id\":\"" + tag.getId() + "\", \"name\":\"" + tag.getName() + "\"},";
-				}
-				
-				if(tagsStr.lastIndexOf(",") != -1)
-				{
-					tagsStr = tagsStr.substring(0, tagsStr.lastIndexOf(","));
-				}
-				
-				tagsStr += "]";
-				
-				snippetsStr += "{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\": " + snippet.getPosition() + "},";
-			}
-			
-			if(snippetsStr.lastIndexOf(",") != -1)
-			{
-				snippetsStr = snippetsStr.substring(0, snippetsStr.lastIndexOf(","));
-			}
-			
-			snippetsStr += "]";
-			
-			chaptersStr += "{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"room\":\"" + chapter.getRoom().getId() + "\", \"snippets\":" + snippetsStr + ", \"position\": " + chapter.getPosition() + "},";
-		}
-		
-		if(chaptersStr.lastIndexOf(",") != -1)
-		{
-			chaptersStr = chaptersStr.substring(0, chaptersStr.lastIndexOf(","));
-		}
-		
-		chaptersStr += "]";
-		
-		String returnStr = "[{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":\"" 
-					+ room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":" 
-					+ chaptersStr + "}]";
-		
-		response.getWriter().write(returnStr);
+		response.getWriter().write(room.toString());
 	}
 
 	/**
@@ -114,21 +57,31 @@ public class RoomServlet extends HttpServlet {
 			response.sendError(400, "'name' parameter missing!");
 			return;
 		}
+		RoomAccess ra = new RoomAccess();
 		Room room = new Room();
 		room.setName(request.getParameter("name"));
-		room.setCourse(request.getParameter("course"));
-		room.setDescription(request.getParameter("description"));
+		if(request.getParameter("course") != null)
+		{
+			room.setCourse(request.getParameter("course"));
+		}
+		if(request.getParameter("description") != null)
+		{
+			room.setDescription(request.getParameter("description"));
+		}
+		
+		ra.saveOrUpdateRoom(room);
 				
+		//current user needs permission to access new room
 		UserAccess ua = new UserAccess();
 		User user = ua.getUserByName("test");
 		if (user == null) {
-			response.sendError(400, "User not found!");
+			response.sendError(404, "User not found!");
 			return;
 		}
 		user.addRoom(room);
 		ua.saveOrUpdateUser(user);
 		
-		response.getWriter().write("{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":" + room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":[]}");
+		response.getWriter().write(room.toString());
 	}
 
 	/**
@@ -197,10 +150,8 @@ public class RoomServlet extends HttpServlet {
 			}
 			room.removeUser(user);
 		}
-
-		ra.saveOrUpdateRoom(room);
 		
-		response.getWriter().write("true");
+		response.getWriter().write(ra.saveOrUpdateRoom(room).toString());
 
 	}
 

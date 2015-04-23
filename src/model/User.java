@@ -80,4 +80,19 @@ public class User implements Serializable {
 	
 	public User() {
 	}
+	
+	@Override
+	public String toString(){
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"email\":\"" + this.email + "\"}";
+	}	
+
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof User)) return false;
+		if (((User) other).getId() == 0) return false;
+		if (((User) other).getId() == this.id) return true;
+		return false;
+	}
 }

@@ -4,8 +4,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>ProfTeX - Dokument bearbeiten</title>
-        <link href="css/document_create.css" rel="stylesheet" type="text/css"/>
-        <link href="css/chosen.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/document_create.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/chosen.css" rel="stylesheet" type="text/css"/>
 	<script src="js/pdf.js"></script>
 
     </head>
