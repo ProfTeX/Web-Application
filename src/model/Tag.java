@@ -3,6 +3,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,14 +32,15 @@ public class Tag implements Serializable {
 	
 	//bi-directional many-to-many association to Snippet
 	@ManyToMany(fetch = FetchType.LAZY) 
-	@JoinTable(name="snippet_has_tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	@Fetch(FetchMode.SELECT)
+	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
 	private List<Snippet> snippets = new ArrayList<Snippet>();
 
 
 	public int getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	void setId(int id) {
 		this.id = id;
 	}
 
@@ -50,14 +54,14 @@ public class Tag implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

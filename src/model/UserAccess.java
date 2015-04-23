@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +20,14 @@ public class UserAccess {
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
-
+			
+			for (Room room : user.getRooms()) {
+				if (room.getId()==0)
+				{
+					room.setCreatedAt(new Date());
+				}
+			}
+			
 			session.saveOrUpdate(user);
 			
 			transaction.commit();
@@ -29,6 +38,25 @@ public class UserAccess {
 			if (transaction != null) transaction.rollback();
 			System.out.println(e.getMessage());
 			return false;
+		}
+	}
+	
+	public User getUserById (Integer id){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+
+			User user = (User) session.get(User.class, id);
+			
+			transaction.commit();
+			return user;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	
@@ -74,7 +102,7 @@ public class UserAccess {
 		}
 	}
 	
-	public User getUserByWhatEver(String columnName, String columnValue){
+	public User getUserByWhatEver(String columnName, Object columnValue){
 		try
 		{
 			session = sf.getCurrentSession();
@@ -92,6 +120,26 @@ public class UserAccess {
 			if (transaction != null) transaction.rollback();
 			System.out.println(e.getMessage());
 			return null;
+		}
+	}
+	
+	public Boolean deleteUser(User user){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+			
+			session.delete(user);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
 		}
 	}
 	

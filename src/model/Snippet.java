@@ -3,6 +3,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -31,17 +33,21 @@ public class Snippet implements Serializable {
 	@Column(name="updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
+	@Column(name="Position")
+	private int position;
 	
 	
 	//bi-directional many-to-many association to Chapter
 	//, joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")}
 	@ManyToMany(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="Chapter_has_Snippet", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")})
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	
 	//bi-directional many-to-many association to Tag
 	@ManyToMany(cascade=CascadeType.ALL)
+	@Fetch(FetchMode.SELECT)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
 	private List<Tag> tags = new ArrayList<Tag>();
@@ -50,7 +56,7 @@ public class Snippet implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	void setId(int id) {
 		this.id = id;
 	}
 
@@ -71,15 +77,22 @@ public class Snippet implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public int getPosition() {
+		return this.position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	public List<Chapter> getChapters() {

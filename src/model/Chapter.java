@@ -3,6 +3,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,12 +28,18 @@ public class Chapter implements Serializable {
 	@Column(name="updated_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-	@Column(name="Room_ID")
-	private int roomId;
-
+	@Column(name="Position")
+	private int position;
 	
+	//@Column(name="Room_ID")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SELECT)
+	@JoinColumn(name="Room_ID")
+	private Room room;
+		
 	//bi-directional association to Snippet
-	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="Chapter_has_Snippet", joinColumns={@JoinColumn(name="Chapter_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
 	private List<Snippet> snippets = new ArrayList<Snippet>();
 
@@ -38,7 +47,7 @@ public class Chapter implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	void setId(int id) {
 		this.id = id;
 	}
 
@@ -52,22 +61,29 @@ public class Chapter implements Serializable {
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public Date getUpdatedAt() {
 		return this.updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getRoomId() {
-		return this.roomId;
+	public Room getRoom() {
+		return this.room;
 	}
-	public void setRoomId(int roomId) {
-		this.roomId = roomId;
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+	
+	public int getPosition() {
+		return this.position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
 	}
 	
 	public List<Snippet> getSnippets() {

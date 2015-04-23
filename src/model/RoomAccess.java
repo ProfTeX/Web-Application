@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,6 +20,10 @@ public class RoomAccess {
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
 
+			if (room.getId() == 0)
+			{
+				room.setCreatedAt(new Date());
+			}
 			session.saveOrUpdate(room);
 			
 			transaction.commit();
@@ -46,6 +53,33 @@ public class RoomAccess {
 			if (transaction != null) transaction.rollback();
 			System.out.println(e.getMessage());
 			return null;
+		}
+	}
+	
+	public Boolean deleteRoom(Room room){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+						
+			List<Chapter> chapters = room.getChapters();
+			ChapterAccess ca = new ChapterAccess();
+			
+			for (Chapter chapter : chapters){
+				ca.deleteChapter(chapter);
+			}
+			
+			session.delete(room);
+			
+			transaction.commit();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return false;
 		}
 	}
 	

@@ -1,16 +1,15 @@
 package pdf;
 
 import java.io.IOException;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
-
 import javax.servlet.ServletException;
+//import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 
 import model.*;
 
@@ -42,7 +41,7 @@ public class RoomServlet extends HttpServlet {
 		Integer roomId = Integer.parseInt(request.getParameter("id"));
 		
 		RoomAccess ra = new RoomAccess();
-		ChapterAccess ca = new ChapterAccess();
+		//ChapterAccess ca = new ChapterAccess();
 		
 		Room room = ra.getRoomById(roomId);
 		
@@ -54,7 +53,9 @@ public class RoomServlet extends HttpServlet {
 		
 		String chaptersStr = "[";
 		
-		List<Chapter> chapters = ca.getChaptersByRoomId(room.getId());
+		List<Chapter> chapters = room.getChapters();
+		
+		System.out.println(chapters.size());
 		
 		for(Chapter chapter : chapters)
 		{
@@ -78,7 +79,7 @@ public class RoomServlet extends HttpServlet {
 				
 				tagsStr += "]";
 				
-				snippetsStr += "{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + "},";
+				snippetsStr += "{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\": " + snippet.getPosition() + "},";
 			}
 			
 			if(snippetsStr.lastIndexOf(",") != -1)
@@ -88,7 +89,7 @@ public class RoomServlet extends HttpServlet {
 			
 			snippetsStr += "]";
 			
-			chaptersStr += "{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"room\":\"" + chapter.getRoomId() + "\", \"snippets\":" + snippetsStr + "},";
+			chaptersStr += "{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"room\":\"" + chapter.getRoom().getId() + "\", \"snippets\":" + snippetsStr + ", \"position\": " + chapter.getPosition() + "},";
 		}
 		
 		if(chaptersStr.lastIndexOf(",") != -1)
@@ -111,46 +112,96 @@ public class RoomServlet extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("name") == null) {
 			response.sendError(400, "'name' parameter missing!");
+			return;
 		}
-		/*else
-		{
-			name = request.getParameter("name");
-		}
-		if(request.getParameter("course") != null) {
-			course = request.getParameter("course");
-		}
-		else
-		{
-			course = "";
-		}
-		if(request.getParameter("description") != null) {
-			description = request.getParameter("description");	
-		}
-		else
-		{
-			description = "";
-		}*/
 		Room room = new Room();
 		room.setName(request.getParameter("name"));
 		room.setCourse(request.getParameter("course"));
-		room.setCreatedAt(new Date());
 		room.setDescription(request.getParameter("description"));
 				
 		UserAccess ua = new UserAccess();
 		User user = ua.getUserByName("test");
 		if (user == null) {
 			response.sendError(400, "User not found!");
+			return;
 		}
 		user.addRoom(room);
 		ua.saveOrUpdateUser(user);
-		//System.out.println(room.getUsers());
+		
+		response.getWriter().write("{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":" + room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":[]}");
 	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("id") == null) 
+		{
+			response.sendError(400, "'id' parameter missing!");
+			return;
+		}
+		
+		RoomAccess ra = new RoomAccess();
+		Room room = ra.getRoomById(Integer.parseInt(request.getParameter("id")));
+		response.getWriter().write(ra.deleteRoom(room).toString());
+		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("id") == null) 
+		{
+			response.sendError(400, "'id' parameter missing!");
+			return;
+		}
+		RoomAccess ra = new RoomAccess();
+		Room room = ra.getRoomById(Integer.parseInt(request.getParameter("id")));
+		
+		if(room == null)
+		{
+			response.sendError(404, "Room with id " + request.getParameter("id") + " not found!");
+			return;
+		}
+		
+		if(request.getParameter("name") != null)
+		{
+			room.setName(request.getParameter("name"));
+		}
+		if(request.getParameter("course") != null)
+		{
+			room.setCourse(request.getParameter("course"));
+		}
+		if(request.getParameter("description") != null)
+		{
+			room.setDescription(request.getParameter("description"));
+		}
+		
+		if(request.getParameter("add_user") != null)
+		{
+			UserAccess ua = new UserAccess();
+			User user = ua.getUserByWhatEver("id", request.getParameter("add_user"));
+			if(user == null)
+			{
+				response.sendError(404, "User with id " + request.getParameter("add_user") + " not found!");
+				return;
+			}
+			room.addUser(user);
+		}
+		if(request.getParameter("rem_user") != null)
+		{
+			UserAccess ua = new UserAccess();
+			User user = ua.getUserByWhatEver("ID", request.getParameter("add_user"));
+			if(user == null)
+			{
+				response.sendError(404, "User with id " + request.getParameter("id") + " not found!");
+				return;
+			}
+			room.removeUser(user);
+		}
+
+		ra.saveOrUpdateRoom(room);
+		
+		response.getWriter().write("true");
+
 	}
 
 }
