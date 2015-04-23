@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Tag")
-public class Tag implements Serializable {
+public class Tag implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -85,5 +85,15 @@ public class Tag implements Serializable {
 	@Override
 	public String toString(){
 		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\"}";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Tag)) return false;
+		if (((Tag) other).getId() == 0) return false;
+		if (((Tag) other).getId() == this.id) return true;
+		return false;
 	}
 }

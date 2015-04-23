@@ -120,4 +120,13 @@ public class Room implements Serializable {
 				+ this.course + "\", \"description\":\"" + this.description + "\", \"chapters\":" 
 				+ ltsChapter.listToString(this.chapters) + ", \"users\":" + ltsUser.listToString(this.users) + "}]";
 	}
+	
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Tag)) return false;
+		if (((Room) other).getId() == 0) return false;
+		if (((Room) other).getId() == this.id) return true;
+		return false;
+	}
 }
