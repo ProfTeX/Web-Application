@@ -31,9 +31,10 @@ public class Tag implements Serializable {
 	
 	
 	//bi-directional many-to-many association to Snippet
-	@ManyToMany(fetch = FetchType.LAZY) 
-	@Fetch(FetchMode.SELECT)
-	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	//@Fetch(FetchMode.SELECT)
+	//@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	@ManyToMany(mappedBy = "tags")
 	private List<Snippet> snippets = new ArrayList<Snippet>();
 
 
