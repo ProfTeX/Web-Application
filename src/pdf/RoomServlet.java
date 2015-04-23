@@ -1,10 +1,7 @@
 package pdf;
 
 import java.io.IOException;
-//import java.util.Date;
-import java.util.List;
 import javax.servlet.ServletException;
-//import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +48,7 @@ public class RoomServlet extends HttpServlet {
 			return;
 		}
 		
-		String chaptersStr = "[";
+		/*String chaptersStr = "[";
 		
 		List<Chapter> chapters = room.getChapters();
 		
@@ -102,8 +99,8 @@ public class RoomServlet extends HttpServlet {
 		String returnStr = "[{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":\"" 
 					+ room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":" 
 					+ chaptersStr + "}]";
-		
-		response.getWriter().write(returnStr);
+		*/
+		response.getWriter().write(room.toString());
 	}
 
 	/**
@@ -128,7 +125,7 @@ public class RoomServlet extends HttpServlet {
 		user.addRoom(room);
 		ua.saveOrUpdateUser(user);
 		
-		response.getWriter().write("{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":" + room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":[]}");
+		response.getWriter().write(room.toString()); //("{\"id\":\"" + room.getId() + "\", \"name\":\"" + room.getName() + "\", \"course\":" + room.getCourse() + "\", \"description\":\"" + room.getDescription() + "\", \"chapters\":[]}");
 	}
 
 	/**

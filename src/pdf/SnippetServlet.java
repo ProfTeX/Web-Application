@@ -38,7 +38,6 @@ public class SnippetServlet extends HttpServlet {
 		}
 		
 		RoomAccess ra = new RoomAccess();
-		//ChapterAccess ca = new ChapterAccess();
 		
 		Room room = ra.getRoomById(Integer.parseInt(request.getParameter("room")));
 		if(room == null)
@@ -74,7 +73,9 @@ public class SnippetServlet extends HttpServlet {
 			}
 		}
 		
-		String result = "[";
+		//String result = "[";
+		
+		ArrayList<Snippet> resultList = new ArrayList<Snippet>();
 		
 		for(Chapter chapter : chapters)
 		{
@@ -117,7 +118,8 @@ public class SnippetServlet extends HttpServlet {
 				}
 				if(contains)
 				{
-					String tagsStr = "[";
+					resultList.add(snippet);
+					/*String tagsStr = "[";
 					
 					for(Tag tag : snippetTags)
 					{
@@ -132,18 +134,20 @@ public class SnippetServlet extends HttpServlet {
 					tagsStr += "]";
 					
 					result += "{\"id\":" + snippet.getId() + ", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\":" + snippet.getPosition()  + "},";
+					*/
 				}
 			}
 		}
 		
-		if(result.lastIndexOf(",") != -1)
+		/*if(result.lastIndexOf(",") != -1)
 		{
 			result = result.substring(0, result.lastIndexOf(","));
 		}
 		
-		result += "]";
+		result += "]";*/
 		
-		response.getWriter().write(result);
+		ListToString<Snippet> lts = new ListToString<Snippet>();
+		response.getWriter().write(lts.listToString(resultList));
 		
 	}
 
@@ -286,7 +290,7 @@ public class SnippetServlet extends HttpServlet {
 		
 		sa.saveOrUpdateSnippet(snippet);
 		
-		response.getWriter().write("{\"id\":" + snippet.getId() + ", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"chapter\":" + snippet.getChapters().get(0).getId() + ", \"position\":" + snippet.getPosition() + ", \"tags\":" + tagsStr + "}");
+		response.getWriter().write(snippet.toString()); //("{\"id\":" + snippet.getId() + ", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"chapter\":" + snippet.getChapters().get(0).getId() + ", \"position\":" + snippet.getPosition() + ", \"tags\":" + tagsStr + "}");
 	}
 
 	/**
