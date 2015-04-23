@@ -60,8 +60,14 @@ public class RoomServlet extends HttpServlet {
 		RoomAccess ra = new RoomAccess();
 		Room room = new Room();
 		room.setName(request.getParameter("name"));
-		room.setCourse(request.getParameter("course"));
-		room.setDescription(request.getParameter("description"));
+		if(request.getParameter("course") != null)
+		{
+			room.setCourse(request.getParameter("course"));
+		}
+		if(request.getParameter("description") != null)
+		{
+			room.setDescription(request.getParameter("description"));
+		}
 		
 		ra.saveOrUpdateRoom(room);
 				
