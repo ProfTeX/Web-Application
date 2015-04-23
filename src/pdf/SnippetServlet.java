@@ -121,7 +121,7 @@ public class SnippetServlet extends HttpServlet {
 					
 					for(Tag tag : snippetTags)
 					{
-						tagsStr += "{\"id\":\"" + tag.getId() + "\", \"name\":\"" + tag.getName() + "\"},";
+						tagsStr += "{\"id\":" + tag.getId() + ", \"name\":\"" + tag.getName() + "\"},";
 					}
 					
 					if(tagsStr.lastIndexOf(",") != -1)
@@ -131,7 +131,7 @@ public class SnippetServlet extends HttpServlet {
 					
 					tagsStr += "]";
 					
-					result += "{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\": " + snippet.getPosition()  + "},";
+					result += "{\"id\":" + snippet.getId() + ", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"tags\":" + tagsStr + ", \"position\":" + snippet.getPosition()  + "},";
 				}
 			}
 		}
@@ -151,9 +151,9 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("id") == null || request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("tags") == null || request.getParameter("position") == null)
+		if(request.getParameter("id") == null)
 		{
-			response.sendError(400, "One or more parameters missing!");
+			response.sendError(400, "'id' parameter missing!");
 			return;
 		}
 		
@@ -165,25 +165,49 @@ public class SnippetServlet extends HttpServlet {
 			response.sendError(404, "Snippet with id " + request.getParameter("id") + " not found!");
 			return;
 		}
-		
-		String[] tags;
-		tags = request.getParameter("tags").split(",");
-		
-		snippet.setTitle(request.getParameter("title"));
-		snippet.setContent(request.getParameter("content"));
-		
-		for(String tagStr : tags)
+		if(request.getParameter("tags") != null)
 		{
-			Tag tag = ta.getTagByName(tagStr);
-			if(tag != null && !snippet.getTags().contains(tag))
+			String[] tags;
+			tags = request.getParameter("tags").split(",");
+			
+			ArrayList<Tag> newTags = new ArrayList<Tag>();
+			for(String tagStr : tags)
 			{
-				snippet.addTag(tag);
+				Tag tag = ta.getTagByName(tagStr.trim());
+				if(tag == null)
+				{
+					response.sendError(404, "Tag " + tagStr + " does not exist!");
+					return;
+				}
+				else
+				{
+					newTags.add(tag);
+				}
 			}
-			else if(tag == null)
+			
+			snippet.setTags(newTags);
+		}
+
+		if(request.getParameter("title") != null)
+		{
+			snippet.setTitle(request.getParameter("title"));
+		}
+		if(request.getParameter("content") != null)
+		{
+			snippet.setContent(request.getParameter("content"));
+		}
+		if(request.getParameter("chapter") != null)
+		{
+			ChapterAccess ca = new ChapterAccess();
+			Chapter chapter = ca.getChapterById(Integer.parseInt(request.getParameter("chapter")));
+			if(chapter == null)
 			{
-				response.sendError(404, "Tag " + tagStr + " does not exist!");
+				response.sendError(404, "Chapter with id " + request.getParameter("chapter") + " not found!");
 				return;
 			}
+			ArrayList<Chapter> chapterArg = new ArrayList<Chapter>();
+			chapterArg.add(chapter);
+			snippet.setChapters(chapterArg);
 		}
 		
 		sa.saveOrUpdateSnippet(snippet);
@@ -196,9 +220,9 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("tags") == null || request.getParameter("position") == null)
+		if(request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("position") == null || request.getParameter("content") == null)
 		{
-			response.sendError(400, "One or more parameters missing!");
+			response.sendError(400, "One or more mandatory parameters missing!");
 			return;
 		}
 		
@@ -210,26 +234,59 @@ public class SnippetServlet extends HttpServlet {
 		snippet.setContent(request.getParameter("content"));
 		snippet.setPosition(Integer.parseInt(request.getParameter("position")));
 		
-		String[] tags;
-		tags = request.getParameter("tags").split(",");
-		
-		for(String tagStr : tags)
+		ChapterAccess ca = new ChapterAccess();
+		Chapter chapter = ca.getChapterById(Integer.parseInt(request.getParameter("chapter")));
+		if(chapter == null)
 		{
-			Tag tag = ta.getTagByName(tagStr);
-			if(tag != null)
+			response.sendError(404, "Chapter with id " + request.getParameter("chapter") + " not found!");
+			return;
+		}
+		
+		ArrayList<Chapter> chapterArg = new ArrayList<Chapter>();
+		chapterArg.add(chapter);
+		snippet.setChapters(chapterArg);
+		
+		if(request.getParameter("tags") != null)
+		{
+			String[] tags;
+			tags = request.getParameter("tags").split(",");
+			
+			for(String tagStr : tags)
 			{
-				snippet.addTag(tag);
-			}
-			else if(tag == null)
-			{
-				response.sendError(404, "Tag " + tagStr + " does not exist!");
-				return;
+				Tag tag = ta.getTagByName(tagStr.trim());
+				if(tag != null)
+				{
+					snippet.addTag(tag);
+				}
+				else if(tag == null)
+				{
+					response.sendError(404, "Tag " + tagStr + " does not exist!");
+					return;
+				}
 			}
 		}
 		
+		String tagsStr = "[";
+		if(request.getParameter("tags") != null)
+		{	
+			List<Tag> snippetTags = snippet.getTags();
+			for(Tag tag : snippetTags)
+			{
+				tagsStr += "{\"id\":" + tag.getId() + ", \"name\":\"" + tag.getName() + "\"},";
+			}
+			
+			if(tagsStr.lastIndexOf(",") != -1)
+			{
+				tagsStr = tagsStr.substring(0, tagsStr.lastIndexOf(","));
+			}
+		}
+		
+		tagsStr += "]";
+		
+		
 		sa.saveOrUpdateSnippet(snippet);
 		
-		response.getWriter().write("{\"id\":\"" + snippet.getId() + "\", \"title\":\"" + snippet.getTitle() + "\", \"content\":" + snippet.getContent() + "\", \"tags\":[]}");
+		response.getWriter().write("{\"id\":" + snippet.getId() + ", \"title\":\"" + snippet.getTitle() + "\", \"content\":\"" + snippet.getContent() + "\", \"chapter\":" + snippet.getChapters().get(0).getId() + ", \"position\":" + snippet.getPosition() + ", \"tags\":" + tagsStr + "}");
 	}
 
 	/**
