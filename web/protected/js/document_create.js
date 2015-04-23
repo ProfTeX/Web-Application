@@ -77,10 +77,51 @@ function tagged(e, params) {
     }
 }
 
-function remove() {
-    e = $(this);
-    console.log(e);
-    e.parent().parent().remove();
+function remove() {	var block = $(this).parent().parent();
+if(block.hasClass('chapter')){
+	$.ajax({
+        url: "chapter/",
+        method: "DELETE",
+        data: {
+        	id: block.data('id')
+        },
+        statusCode: {
+            404: function() {
+            	Console.log('404');
+            },
+        	400: function() {
+            	Console.log('404');
+            },
+            200: function(data) {
+            	Console.log('200');
+                e = $(this);
+                e.parent().parent().remove();
+            }
+        }
+    });
+}
+if(block.hasClass('snippet')){
+	$.ajax({
+        url: "snippet/",
+        method: "DELETE",
+        data: {
+        	id: block.data('id')
+        },
+        statusCode: {
+            404: function() {
+            	Console.log('404');
+            },
+        	400: function() {
+            	Console.log('404');
+            },
+            200: function(data) {
+            	Console.log('200');
+                e = $(this);
+                e.parent().parent().remove();
+            }
+        }
+    });
+}
 }
 
 function getBlocks() {
