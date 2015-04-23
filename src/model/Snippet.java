@@ -140,7 +140,7 @@ public class Snippet implements Serializable {
 	public boolean equals(Object other){
 		if (other == null) return false;
 		if (other == this) return true;
-		if (!(other instanceof Tag)) return false;
+		if (!(other instanceof Snippet)) return false;
 		if (((Snippet) other).getId() == 0) return false;
 		if (((Snippet) other).getId() == this.id) return true;
 		return false;
