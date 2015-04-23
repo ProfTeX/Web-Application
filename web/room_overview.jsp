@@ -1,3 +1,7 @@
+<%@ page import="model.*" %>
+<%
+  User user = (User) request.getAttribute("user");
+%>
 <html>
 	<head>
 		<title>ProfTeX - Raeume</title>
@@ -11,10 +15,8 @@
 	</nav>
 	
 	<br><br><br><br><br>
-
-	<a class="button" href="http://www.google.de"><button>Test</button></a>
-	<a class="button" href="document_create.jsp"><button>Mathematik</button></a>
-	<a class="button" href="http://www.google.de"><button>Formale Sprachen</button></a>
-	<a class="button" href="http://www.google.de"><button>Karl Stroetmann</button></a>
-	
+	<c:forEach items="${user.rooms}" var="room">
+		<a class="button" href="doument_create.jsp">${room}</a>
+	</c:forEach>
+	<div class="button" id="new_room">Erstelle einen neuen Raum!</div>	
 </html>
