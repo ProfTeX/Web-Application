@@ -3,19 +3,16 @@ package pdf;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Enumeration;
+import java.io.OutputStream;
+import java.util.Random;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.Session;
-
-import model.*;
+import javax.servlet.http.Part;
 
 /**
  * Servlet implementation class ImageServlet
@@ -40,8 +37,7 @@ public class ImageServlet extends HttpServlet {
 		File imageDir = new File(getServletContext().getRealPath("/") + "images");
 		imageDir.mkdirs();
 		
-		if(request.getParameter("room") == null)
-		{
+		if(request.getParameter("room") == null) {
 			response.sendError(400, "'room' parameter missing!");
 			return;
 		}
@@ -106,14 +102,47 @@ public class ImageServlet extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+		ServletOutputStream out = response.getOutputStream();
+		
+		File imageDir = new File(getServletContext().getRealPath("/") + "images");
+		imageDir.mkdirs();
+		
+		// check for room get variable
+		if(request.getParameter("room") == null) {
+			response.sendError(400, "'room' parameter missing!");
+			return;
+		}
+		Integer roomId = Integer.parseInt(request.getParameter("room"));
+		String roomPath = imageDir.getAbsolutePath() + File.separator + roomId.toString() + File.separator;
+		out.print(roomPath + "\n");
+		File roomDir = new File(roomPath);
 
+	    // creates the save directory if it does not exists
+        if (!roomDir.exists()) {
+            roomDir.mkdir();
+        }
+        for (Part part : request.getParts()) {
+        	out.print("Kacke is am dampfen");
+            String fileName = this.randomString(30);
+            part.write(roomDir + File.separator + fileName);
+        }
+        
+    }
+	
+	protected String randomString( int len ) {
+		String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		Random rnd = new Random();
+		
+		StringBuilder sb = new StringBuilder( len );
+	    for( int i = 0; i < len; i++ ) 
+	         sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+	    return sb.toString();
+	}
+	
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }
