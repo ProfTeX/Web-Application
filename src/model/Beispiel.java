@@ -194,6 +194,10 @@ public class Beispiel {
 		user.removeRoom(room);
 		System.out.println(user.getRooms());
 		ua.saveOrUpdateUser(user);*/
+		
+		SnippetAccess sa = new SnippetAccess();
+		Snippet snippet = sa.getSnippetById(7);
+		sa. deleteSnippet(snippet);
 	}
 	
 }

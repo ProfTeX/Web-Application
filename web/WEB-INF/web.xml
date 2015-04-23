@@ -3,7 +3,7 @@
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
-  <security-constraint>
+<!--  <security-constraint>
     <web-resource-collection>
       <web-resource-name>proftex</web-resource-name>
       <url-pattern>/protected/*</url-pattern>
@@ -23,5 +23,5 @@
       <form-login-page>/login_serv.jsp</form-login-page>
       <form-error-page>/login_failed.jsp</form-error-page>
     </form-login-config>
-  </login-config>
+  </login-config>-->
 </web-app>
