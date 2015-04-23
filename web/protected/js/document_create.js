@@ -189,13 +189,13 @@ function accept() {
                 },
                 statusCode: {
                     404: function () {
-                        Console.log('404');
+                        console.log('404');
                     },
                     400: function () {
-                        Console.log('400');
+                        console.log('400');
                     },
                     200: function (data) {
-                        Console.log('200');
+                        console.log('200');
                         resolve(data);
                     }
                 }
