@@ -84,7 +84,7 @@ public class Tag implements Serializable{
 	
 	@Override
 	public String toString(){
-		return "{\"id\":\"" + this.id + "\", \"name\":\"" + this.name + "\"}";
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\"}";
 	}
 	
 	@Override

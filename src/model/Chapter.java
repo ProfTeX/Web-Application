@@ -107,6 +107,7 @@ public class Chapter implements Serializable {
 	
 	@Override
 	public String toString(){
-		return "";
+		ListToString<Snippet> lts = new ListToString<Snippet>();
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"position\":" + this.position + ", \"snippets\":" + lts.listToString(this.snippets) + ", \"room\":" + this.room.getId() + "}";
 	}
 }

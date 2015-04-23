@@ -111,4 +111,13 @@ public class Room implements Serializable {
 	
 	public Room() {
 	}
+	
+	@Override
+	public String toString(){
+		ListToString<Chapter> ltsChapter = new ListToString<Chapter>();
+		ListToString<User> ltsUser = new ListToString<User>();
+		return "[{\"id:\"" + this.id + ", \"name\":\"" + this.name + "\", \"course\":\"" 
+				+ this.course + "\", \"description\":\"" + this.description + "\", \"chapters\":" 
+				+ ltsChapter.listToString(this.chapters) + ", \"users\":" + ltsUser.listToString(this.users) + "}]";
+	}
 }
