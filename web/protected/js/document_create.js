@@ -7,7 +7,7 @@ function newSnippet() {
         pos = e.data('position') + 1;
     };
 
-    var newSnippet = $('<div id="new-snippet" data-id="" data-position="' + pos + '" class="element snippet">' +
+    var newSnippet = $('<div id="new-snippet" data-id="" data-position="' + pos + '" data-chapter-id="" class="element snippet">' + 
             '<div class="checkbox"><input type="checkbox" name="choose" value="" /></div>' +
             '<div class="block">' +
             '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>' +
@@ -86,53 +86,106 @@ function remove() {
 function accept() {
 	var block = $(this).parent().parent();
 	if(block.hasClass('chapter')){
-		if ($(this).parent().parent().data('id')===""){
-			$.ajax({
-	            url: "chapter/",
-	            method: "POST",
-	            data: {
-	                name: block.find('.block-title').val(),
-	                room: room,
-	                snippets: snippets
-	            },
-	            statusCode: {
-	                401: function() {
-	                    reject({status: 401 });
-	                },
-	                200: function(data) {
-	                    resolve(data);
-	                }
-	            }
-	        });
-		}
-		else{
+		if (block.data('id')===""){
 			$.ajax({
 	            url: "chapter/",
 	            method: "PUT",
 	            data: {
-	                name: email,
-	                room: password,
-	                snippets: snippets
+	                name: block.find('.block-title').val(),
+	                position: block.data('position'),
+	                room: room
 	            },
 	            statusCode: {
-	                401: function() {
-	                    reject({status: 401 });
+	                404: function() {
+	                	Console.log('404');
+	                },
+	            	400: function() {
+	                	Console.log('404');
 	                },
 	                200: function(data) {
+	                	Console.log('200');
 	                    resolve(data);
 	                }
 	            }
 	        });
 		}
-		if($(this).parent().parent().hasClass('snippet')===""){
-			
+		else{
+			$.ajax({
+	            url: "chapter/",
+	            method: "POST",
+	            data: {
+	            	id: block.data('id'),
+	                name: block.find('.block-title').val(),
+	                position: block.data('position')
+	            },
+	            statusCode: {
+	                404: function() {
+	                	Console.log('404');
+	                },
+	            	400: function() {
+	                	Console.log('404');
+	                },
+	                200: function(data) {
+	                	Console.log('200');
+	                    resolve(data);
+	                }
+	            }
+	        });
+		}
+	}
+	if(block.hasClass('snippet')){
+		if (block.data('id')===""){
+			$.ajax({
+	            url: "snippet/",
+	            method: "PUT",
+	            data: {
+	            	title: block.find('.block-title').val(),
+	            	content: block.find('.block-text').val(),
+	            	tags: block.find('.block-tags').val(),
+	            	position: block.data('position'),
+	            	chapter: block.data('chapter-id')
+	            },
+	            statusCode: {
+	                404: function() {
+	                	Console.log('404');
+	                },
+	            	400: function() {
+	                	Console.log('404');
+	                },
+	                200: function(data) {
+	                	Console.log('200');
+	                    resolve(data);
+	                }
+	            }
+	        });
 		}
 		else{
-			
+			$.ajax({
+	            url: "snippet/",
+	            method: "POST",
+	            data: {
+	            	id: block.data('id'),
+	            	title: block.find('.block-title').val(),
+	            	content: block.find('.block-text').val(),
+	            	tags: block.find('.block-tags').val(),
+	            	position: block.data('position'),
+	            	chapter: block.data('chapter-id')
+	            },
+	            statusCode: {
+	                404: function() {
+	                	Console.log('404');
+	                },
+	            	400: function() {
+	                	Console.log('404');
+	                },
+	                200: function(data) {
+	                	Console.log('200');
+	                    resolve(data);
+	                }
+	            }
+	        });
 		}
-		
-		
-		
+	
 	}
 	
     console.log("Accept works!");
