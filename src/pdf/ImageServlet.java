@@ -1,16 +1,22 @@
 package pdf;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-//import java.util.Enumeration;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 //import org.hibernate.Session;
 
@@ -20,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class ImageServlet
  */
 @WebServlet("/image")
+@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
+maxFileSize=1024*1024*10,      // 10MB
+maxRequestSize=1024*1024*50)   // 50MB
 public class ImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -102,9 +111,9 @@ public class ImageServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 * POST image?room={ROOMID}: Array of Filenames
 	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletOutputStream out = response.getOutputStream();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		File imageDir = new File(getServletContext().getRealPath("/") + "images");
 		imageDir.mkdirs();
@@ -116,19 +125,27 @@ public class ImageServlet extends HttpServlet {
 		}
 		Integer roomId = Integer.parseInt(request.getParameter("room"));
 		String roomPath = imageDir.getAbsolutePath() + File.separator + roomId.toString() + File.separator;
-		out.print(roomPath + "\n");
 		File roomDir = new File(roomPath);
 
 	    // creates the save directory if it does not exists
         if (!roomDir.exists()) {
             roomDir.mkdir();
         }
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        LinkedList<String> fileNames = new LinkedList<String>();
         for (Part part : request.getParts()) {
-        	out.print("Kacke is am dampfen");
             String fileName = this.randomString(30);
-            part.write(roomDir + File.separator + fileName);
+            try {
+            	fileName += getFileEnding(part);
+            } catch(IOException e) {
+            	response.sendError(403, e.getMessage());
+            	return;
+            }
+            part.write(roomPath + File.separator + fileName);
+            fileNames.push("\"" + fileName + "\"");
         }
-        
+        response.getOutputStream().print(fileNames.toString());
     }
 	
 	protected String randomString( int len ) {
@@ -141,10 +158,47 @@ public class ImageServlet extends HttpServlet {
 	    return sb.toString();
 	}
 	
+	protected String getFileEnding( Part part ) throws IOException {
+		if (part.getContentType().equals("image/png")) {
+			return ".png";
+		} else if (part.getContentType().equals("image/jpeg")) {
+			return ".jpg";
+		}
+		throw new IOException("Unsupported filetype.");
+	}
+	
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 * DELETE image?room={ROOMID}&id={FILENAME}: Boolean
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("room") == null) {
+			response.sendError(400, "'room' parameter missing!");
+			return;
+		}
+		
+		if(request.getParameter("id") == null) {
+			response.sendError(400, "'id' parameter missing!");
+			return;
+		}
+		
+		File imageDir = new File(getServletContext().getRealPath("/") + "images");
+		imageDir.mkdirs();
+
+		Integer roomId = Integer.parseInt(request.getParameter("room"));
+		String roomPath = imageDir.getAbsolutePath() + File.separator + roomId.toString() + File.separator;
+
+		File image = new File(roomPath + request.getParameter("id"));
+		
+		if(!image.exists()) {
+			response.sendError(404, "File was not found.");
+			return;
+		}
+		
+		if(!image.delete()) {
+			response.sendError(500, "Could not delete file.");
+		}
+		
+		response.getOutputStream().print("true");
 	}
 }
