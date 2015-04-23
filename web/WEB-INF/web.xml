@@ -3,4 +3,24 @@
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
+
+  <display-name>OrderSecurityDigest</display-name>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>proftex</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+    <role-name>user</role-name>
+  	</security-role>
+  <login-config>
+        <auth-method>DIGEST</auth-method>
+        <realm-name>myrealm</realm-name>
+    </login-config>
 </web-app>
