@@ -31,7 +31,7 @@ function newChapter() {
     e.after(newChapter);
 }
 
-function markChapter() {
+function selectChapter() {
     e = $(this).parent();
     var newStatus = e.find('.checkbox input').prop('checked');
 
@@ -39,6 +39,21 @@ function markChapter() {
         e = e.next();
         e.find('.checkbox input').prop('checked', newStatus);
     }
+}
+
+function tagged() {
+    var tags = [];
+    $('.chosen-container .search-choice span').each(function(){
+        tags.push(this.innerHTML);
+    });
+    var regex = new RegExp(tags.join('|'));
+    $('#right .snippet').each(function() {
+        if($(this).find('.block-tags').val().match(regex, 'gi')) {
+            $(this).find('.checkbox input').prop('checked', true);
+        } else {
+            $(this).find('.checkbox input').prop('checked', false);
+        }
+    });
 }
 
 function remove() {
@@ -60,11 +75,13 @@ $('#tag-filter select').chosen({
     no_results_text: "Der Tag existiert bislang nicht!"
 });
 
+$('#tag-filter select').on('change', tagged);
+
 $('#right').on('click', '.block button.submit', accept);
 
 $('#right').on('click', '.block button.remove', remove);
 
-$('#right').on('click', '.chapter .checkbox', markChapter);
+$('#right').on('click', '.chapter .checkbox', selectChapter);
 
 $('.btn-block').on('click', newSnippet);
 
