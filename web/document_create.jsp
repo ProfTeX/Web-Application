@@ -34,26 +34,7 @@
                     <option value="vl1">vl1</option>
                     <option value="vl2">vl2</option>
                 </select>
-            </div>
-            <div class="element chapter">
-                <div class="checkbox"><input type="checkbox" name="choose" value="chapter-1" /></div>
-                <div class="block">
-                    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="Lorem ipsum" /><br /></div>
-                    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>
-                </div>
-            </div>
-
-            <div class="element snippet">
-                <div class="checkbox"><input type="checkbox" name="choose" value="snippet-1" /></div>
-                <div class="block">
-                    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="Lorem ipsum" /><br /></div>
-                    <div><label for="desc">Beschreibung:</label><br />
-                    <textarea name="desc" class="block-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</textarea></div>
-                    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" value="beweis, vl1" placeholder="definition, beispiel, lösung, übung, vl1"/></div>
-                    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>
-                </div>
-            </div>
-                
+            </div>                
             <div class="new-element">
                 <button class="btn-chapter">Neues Kapitel</button>
                 <button class="btn-block">Neuer Block</button>

@@ -1,9 +1,14 @@
 function newSnippet() {
-    e = $('#right .element').last();
+    var e = $('#tag-filter');
+    var pos = 0;
+    
+    if($('#right .element').last().data('position') !== undefined) {
+        e = $('#right .element').last();
+        pos = e.data('position') + 1;
+    };
 
-
-    var newSnippet = $('<div class="element snippet">' +
-            '<div class="checkbox"><input type="checkbox" name="choose" value="chapter-n" /></div>' +
+    var newSnippet = $('<div id="new-snippet" data-id="" data-position="' + pos + '" class="element snippet">' +
+            '<div class="checkbox"><input type="checkbox" name="choose" value="" /></div>' +
             '<div class="block">' +
             '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>' +
             '    <div><label for="desc">Beschreibung:</label><br />' +
@@ -14,21 +19,28 @@ function newSnippet() {
             '</div>');
 
     e.after(newSnippet);
+    $('#new-snippet').removeAttr('id');
 }
 
 function newChapter() {
-    e = $('#right .element').last();
+    var e = $('#tag-filter');
+    var pos = 0;
+    
+    if($('#right .element').last().data('position') !== undefined) {
+        e = $('#right .element').last();
+        pos = e.data('position') + 1;
+    };
 
-
-    var newChapter = $('<div class="element chapter">' +
-            '<div class="checkbox"><input type="checkbox" name="choose" value="chapter-n" /></div>' +
+    var newChapter = $('<div id="new-chapter" data-id="" data-position="' + pos + '" class="element chapter">' +
+            '<div class="checkbox"><input type="checkbox" name="choose" value="" /></div>' +
             '<div class="block">' +
             '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="" /><br /></div>' +
             '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
             '</div>' +
             '</div>');
-
+    
     e.after(newChapter);
+    $('#new-chapter').removeAttr('id');
 }
 
 function selectChapter() {
@@ -41,19 +53,28 @@ function selectChapter() {
     }
 }
 
-function tagged() {
+function tagged(e, params) {
     var tags = [];
+    
     $('.chosen-container .search-choice span').each(function(){
-        tags.push(this.innerHTML);
-    });
-    var regex = new RegExp(tags.join('|'));
-    $('#right .snippet').each(function() {
-        if($(this).find('.block-tags').val().match(regex, 'gi')) {
-            $(this).find('.checkbox input').prop('checked', true);
-        } else {
-            $(this).find('.checkbox input').prop('checked', false);
+        //element is removed after function call but added before
+        if(params.deselected !== this.innerHTML) {
+            tags.push(this.innerHTML);
         }
     });
+    
+    if (tags.length !== 0) {
+        var regex = new RegExp(tags.join('|'));    
+        $('#right .snippet').each(function() {
+            if($(this).find('.block-tags').val().match(regex, 'gi')) {
+                $(this).find('.checkbox input').prop('checked', true);
+            } else {
+                $(this).find('.checkbox input').prop('checked', false);
+            }
+        });
+    } else {
+        $('#right .snippet').find('.checkbox input').prop('checked', false);
+    }
 }
 
 function remove() {
