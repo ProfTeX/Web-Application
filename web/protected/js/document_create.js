@@ -97,13 +97,13 @@ function remove() {
             },
             statusCode: {
                 404: function () {
-                    Console.log('404');
+                    console.log('404');
                 },
                 400: function () {
-                    Console.log('400');
+                    console.log('400');
                 },
                 200: function (data) {
-                    Console.log('200');
+                    console.log('200');
                     e = $(this);
                     e.parent().parent().remove();
                 }
@@ -120,13 +120,13 @@ function remove() {
             },
             statusCode: {
                 404: function () {
-                    Console.log('404');
+                    console.log('404');
                 },
                 400: function () {
-                    Console.log('400');
+                    console.log('400');
                 },
                 200: function (data) {
-                    Console.log('200');
+                    console.log('200');
                     e = $(this);
                     e.parent().parent().remove();
                 }
@@ -137,9 +137,12 @@ function remove() {
 
 function getBlocks() {
     $.ajax({
-        url: '../room?id=' + room,
+        url: '../room',
         method: 'GET',
         mimeType: "application/json",
+        data: {
+            id: room
+        },
         statusCode: {
             400: function () {
                 console.log('StatusCode: 400');
@@ -213,13 +216,13 @@ function accept() {
                 },
                 statusCode: {
                     404: function () {
-                        Console.log('404');
+                        console.log('404');
                     },
                     400: function () {
-                        Console.log('400');
+                        console.log('400');
                     },
                     200: function (data) {
-                        Console.log('200');
+                        console.log('200');
                         resolve(data);
                     }
                 }
@@ -241,13 +244,13 @@ function accept() {
                 },
                 statusCode: {
                     404: function () {
-                        Console.log('404');
+                        console.log('404');
                     },
                     400: function () {
-                        Console.log('400');
+                        console.log('400');
                     },
                     200: function (data) {
-                        Console.log('200');
+                        console.log('200');
                         resolve(data);
                     }
                 }
@@ -268,13 +271,13 @@ function accept() {
                 },
                 statusCode: {
                     404: function () {
-                        Console.log('404');
+                        console.log('404');
                     },
                     400: function () {
-                        Console.log('400');
+                        console.log('400');
                     },
                     200: function (data) {
-                        Console.log('200');
+                        console.log('200');
                         resolve(data);
                     }
                 }
