@@ -85,7 +85,40 @@ function remove() {
 
 function getBlocks() {
     $.ajax({
-        url: ""
+        url: '../room?id=' + room,
+        method: 'GET',
+        mimeType: "application/json",
+        statusCode: {
+            400: function() {
+                console.log('StatusCode: 400');
+            },
+            200: function(data) {
+                var output = '';
+                for(var i = 0; i < data[0].chapters.length; i++) {
+                    output += '<div data-id="' + data[0].chapters[i].id + '" data-position="' + data[0].chapters[i].position + '" class="element chapter">' +
+                                    '<div class="checkbox"><input type="checkbox" name="choose" /></div>' +
+                                    '<div class="block">' +
+                                    '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="' + data[0].chapters[i].name + '" /><br /></div>' +
+                                    '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
+                                    '</div>' +
+                                    '</div>';
+                    for(var z = 0; z < data[0].chapters[i].snippets.length; z++) {
+                        output += '<div data-id="' + data[0].chapters[i].snippets[z].id + '" data-chapter-id="' + data[0].chapters[i].id + '" data-position="' + data[0].chapters[i].snippets[z].position + '" class="element snippet">' +
+                                    '<div class="checkbox"><input type="checkbox" name="choose" /></div>' +
+                                    '<div class="block">' +
+                                    '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="' + data[0].chapters[i].snippets[z].title + '" /><br /></div>' +
+                                    '    <div><label for="desc">Beschreibung:</label><br />' +
+                                    '    <textarea name="desc" class="block-text">' + data[0].chapters[i].snippets[z].content + '</textarea></div>' +
+                                    '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1" value="' + data[0].chapters[i].snippets[z].tags.join(',') + '"/></div>' +
+                                    '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
+                                    '</div>' +
+                                    '</div>';
+                    }
+                    $('#tag-filter').after(output);
+                }
+                
+            }
+        }
     });
 }
 
