@@ -90,6 +90,57 @@ function getBlocks() {
 }
 
 function accept() {
+	var block = $(this).parent().parent();
+	if(block.hasClass('chapter')){
+		if ($(this).parent().parent().data('id')===""){
+			$.ajax({
+	            url: "chapter/",
+	            method: "POST",
+	            data: {
+	                name: block.find('.block-title').val(),
+	                room: room,
+	                snippets: snippets
+	            },
+	            statusCode: {
+	                401: function() {
+	                    reject({status: 401 });
+	                },
+	                200: function(data) {
+	                    resolve(data);
+	                }
+	            }
+	        });
+		}
+		else{
+			$.ajax({
+	            url: "chapter/",
+	            method: "PUT",
+	            data: {
+	                name: email,
+	                room: password,
+	                snippets: snippets
+	            },
+	            statusCode: {
+	                401: function() {
+	                    reject({status: 401 });
+	                },
+	                200: function(data) {
+	                    resolve(data);
+	                }
+	            }
+	        });
+		}
+		if($(this).parent().parent().hasClass('snippet')===""){
+			
+		}
+		else{
+			
+		}
+		
+		
+		
+	}
+	
     console.log("Accept works!");
 }
 
