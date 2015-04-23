@@ -36,16 +36,17 @@ public class Room implements Serializable {
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	//bi-directional many-to-many association to User
-	@ManyToMany(fetch = FetchType.LAZY)
-	@Fetch(FetchMode.SELECT)
-	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
+	//@ManyToMany(fetch = FetchType.LAZY)
+	//@Fetch(FetchMode.SELECT)
+	//@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="Room_ID")}, inverseJoinColumns={@JoinColumn(name="User_ID")})
+	@ManyToMany(mappedBy = "rooms")
 	private List<User> users = new ArrayList<User>();
 	
 	
 	public int getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	void setId(int id) {
 		this.id = id;
 	}
 

@@ -41,6 +41,25 @@ public class UserAccess {
 		}
 	}
 	
+	public User getUserById (Integer id){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+
+			User user = (User) session.get(User.class, id);
+			
+			transaction.commit();
+			return user;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 	public User getUserByName(String userName){
 		try
 		{
@@ -83,7 +102,7 @@ public class UserAccess {
 		}
 	}
 	
-	public User getUserByWhatEver(String columnName, String columnValue){
+	public User getUserByWhatEver(String columnName, Object columnValue){
 		try
 		{
 			session = sf.getCurrentSession();

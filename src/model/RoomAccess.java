@@ -61,9 +61,9 @@ public class RoomAccess {
 		{
 			session = sf.getCurrentSession();
 			transaction = session.beginTransaction();
-			
+						
+			List<Chapter> chapters = room.getChapters();
 			ChapterAccess ca = new ChapterAccess();
-			List<Chapter> chapters = ca.getChaptersByRoomId(room.getId());
 			
 			for (Chapter chapter : chapters){
 				ca.deleteChapter(chapter);
