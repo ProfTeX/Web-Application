@@ -71,3 +71,6 @@ local.properties
 
 ### Hibernate ###
 src/hibernate.cfg.xml
+
+### Coffeescript ###
+*.coffee

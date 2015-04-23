@@ -30,11 +30,10 @@
 	<form method="POST" action="j_security_check" >
 		<p><input type="text" name="j_username"></p>
 		<p><input type="password" name="j_password"></p>
-		<p><input type="submit" value="go"></p>
+		<p><input type="submit" value="Submit"></p>
 	</form>
 	<a href="...">Register</a>
     </div>
-    
 </body>
 
 </html>
