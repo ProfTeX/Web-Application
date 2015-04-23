@@ -39,7 +39,7 @@ public class Snippet implements Serializable {
 	
 	//bi-directional many-to-many association to Chapter
 	//, joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")}
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="Chapter_has_Snippet", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")})
 	private List<Chapter> chapters = new ArrayList<Chapter>();
@@ -128,5 +128,20 @@ public class Snippet implements Serializable {
 	}
 	
 	public Snippet() {
+	}
+	
+	@Override
+	public String toString(){
+		return "{\"id\":" + this.id + ", \"title\":\"" + this.title + "\", \"content\":\"" + this.content + "\", \"tags\":" + this.tags + ", \"position\":" + this.position + "}";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Snippet)) return false;
+		if (((Snippet) other).getId() == 0) return false;
+		if (((Snippet) other).getId() == this.id) return true;
+		return false;
 	}
 }

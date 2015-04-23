@@ -6,6 +6,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,10 +18,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.*;
+
 /**
  * Servlet implementation class PDFServlet
  */
-@WebServlet("/PDFServlet")
+@WebServlet("/pdf")
 public class PDFServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,63 +40,121 @@ public class PDFServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		if(request.getParameter("ids") == null)
+		{
+			response.sendError(400, "'ids' parameter missing!");
+			return;		
+		} 
 		
 		File pdftemp = new File(getServletContext().getRealPath("/") + "pdf_temp");
 		pdftemp.mkdirs();
 		
 		PDFCreator pdf = new PDFCreator();
 		pdf.setOutputDir(pdftemp.getAbsolutePath());
+		
+		String[] ids;
+		ArrayList<Snippet> snippets = new ArrayList<Snippet>();
+		ArrayList<Chapter> chapters = new ArrayList<Chapter>();
+		SnippetAccess sa = new SnippetAccess();
+		ids = request.getParameter("ids").split(",");
+		for(int i = 0; i < ids.length; i++)
+		{
+			Snippet snippet = sa.getSnippetById(Integer.parseInt(ids[i]));
+			if(snippet == null)
+			{
+				response.sendError(404, "Snippet with id " + ids[i] + " not found!");
+				return;
+			}
+			if(!snippets.contains(snippet))
+			{
+				snippets.add(snippet);
+				Chapter chapter = snippet.getChapters().get(0);
+				if(!chapters.contains(chapter))
+				{
+					chapters.add(chapter);
+				}
+			}
+		}
+		
+		//Sort snippets and chapters based on position
+		Collections.sort(snippets, new Comparator<Snippet>() {
+	        @Override
+	        public int compare(Snippet  snip1, Snippet  snip2)
+	        {
+	        	if(snip1.getPosition() == snip2.getPosition())
+	        	{
+	        		return 0;
+	        	}
+	        	else if(snip1.getPosition() < snip2.getPosition())
+	        	{
+	        		return -1;
+	        	}
+	        	else
+	        	{
+	        		return 1;
+	        	}
+	        }
+	    });
+		Collections.sort(chapters, new Comparator<Chapter>() {
+	        @Override
+	        public int compare(Chapter  chap1, Chapter  chap2)
+	        {
+	        	if(chap1.getPosition() == chap2.getPosition())
+	        	{
+	        		return 0;
+	        	}
+	        	else if(chap1.getPosition() < chap2.getPosition())
+	        	{
+	        		return -1;
+	        	}
+	        	else
+	        	{
+	        		return 1;
+	        	}
+	        }
+	    });
+		
+		String content = "";
+		
+		for(Chapter chapter : chapters)
+		{
+			content += "\\section{" + chapter.getName() + "}\n";
+			
+			List<Snippet> chapterSnippets = chapter.getSnippets();
+			for(Snippet snippet : chapterSnippets)
+			{
+				if(snippets.contains(snippet))
+				{
+					content += "\\subsection{" + snippet.getTitle() + "}\n";
+					content += snippet.getContent().replace("\\", "\\\\") + "\n";
+				}
+			}
+		}
+		
 		//System.out.println(request.getParameter("texstring"));
-		//TODO: Daten von DB holen, Parameter übergeben
-		String output = pdf.compileString("\\documentclass{scrartcl}\n" + 
+
+		String template =
 				"\n" + 
+				"\\documentclass{scrartcl}\n" + 
 				"\\usepackage[utf8]{inputenc}\n" + 
 				"\\usepackage[T1]{fontenc}\n" + 
-				"\\usepackage[ngerman]{babel}\n" + 
-				"%\\usepackage{lipsum}\n" + 
+				"\\usepackage[ngerman]{babel}\n" +
 				"\\usepackage{graphicx}\n" + 
 				"\\usepackage{tabularx}\n" + 
 				"\n" + 
 				"\\begin{document}\n" + 
 				"\n" + 
-				"\\tableofcontents\n" + 
-				"\n" + 
-				"\n" + 
-				"\\section{Hello World}\n" + 
-				"Hello World!\n" + 
-				"\n" + 
-				"\n" + 
-				"\\section{Befehle}\n" + 
-				"Befehle: \\\\<befehlsnahme>[..optionen..]\\{..argument..(zwingend)\\}\n" + 
-				"\n" + 
-				"\\section{Umlaute}\n" + 
-				"äöü+ßasökfepokfsa\n" + 
-				"\\subsubsection{Umlaute subsub}\n" + 
-				"subsubsub\n" + 
-				"\n" + 
-				"\\begin{figure}[t]\n" + 
-				"  %\\includegraphics{\\textwidth}{IMG_0118.jpg}\n" + 
-				"  \\centering\n" + 
-				"  \\caption{Das ist ein Bild}\n" + 
-				"  \\label{fig:testbild}\n" + 
-				"\\end{figure}\n" + 
-				"\n" + 
-				"\\begin{table}\n" + 
-				"  \\centering\n" + 
-				"  \\caption{Überschrift}\n" + 
-				"\\begin{tabularx}{\\textwidth}{l|r|X}\n" + 
-				"\n" + 
-				"  \n" + 
-				"  links & rechts & center \\\\ \\hline\n" + 
-				"  links & rechts & center \\\\\n" + 
-				"  asdf & asdf & asfd \\\\\n" + 
-				"  \n" + 
-				"\\end{tabularx}\n" + 
-				"\\end{table}\n" + 
-				"Noch mehr Text. :)\n" + 
-				"\n" + 
-				"\\end{document}\n" + 
-				"");
+				"%\\tableofcontents\n" + 
+				"%CONTENT%" +
+				"\\end{document}";
+		
+		System.out.println(snippets);
+		
+		System.out.println(template.replace("%CONTENT%", content));
+		
+		String output = pdf.compileString(template.replace("%CONTENT%", content));
+		
+		System.out.println(output);
 		
 		//delete files older than 1h
 		File[] listFiles = pdftemp.listFiles();
@@ -108,7 +172,7 @@ public class PDFServlet extends HttpServlet {
 		
 		request.setAttribute("pdf_path", "pdf_temp/"+pdf.getUUID() + ".pdf");
 		
-		RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/pdf.jsp");
+		RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("protected/pdf.jsp");
 		RequetsDispatcherObj.forward(request, response);
 		
 	}

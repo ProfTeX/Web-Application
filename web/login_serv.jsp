@@ -11,7 +11,7 @@
 
 <body>
 	<nav>
-        <div class="logo">ProfTeX2</div>
+        <div class="logo">ProfTeX</div>
         <div class="threebars"><div></div></div>
     </nav>
 
@@ -26,7 +26,7 @@
 	</form> -->
 	
 	<div class="container">
-    <div class="heador"><h1>Login</h1></div>
+    <div class="header"><h1>Login</h1></div>
 	<form method="POST" action="j_security_check" >
 		<p><input type="text" name="j_username"></p>
 		<p><input type="password" name="j_password"></p>

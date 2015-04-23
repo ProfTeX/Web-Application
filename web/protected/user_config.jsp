@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Benutzer Einstellungen</title>
-		<link rel="stylesheet" type="text/css" href="css/user_config.css">
+		<link rel="stylesheet" type="text/css" href="../css/user_config.css">
 	</head>
 
 <body>

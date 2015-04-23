@@ -82,9 +82,7 @@ public class ChapterServlet extends HttpServlet {
 			chapter.removeSnippet(snippet);
 		}
 		
-		ca.saveOrUpdateChapter(chapter);
-		
-		response.getWriter().write("true");
+		response.getWriter().write(ca.saveOrUpdateChapter(chapter).toString());
 	}
 
 	/**
@@ -101,6 +99,7 @@ public class ChapterServlet extends HttpServlet {
 		if(room == null)
 		{
 			response.sendError(404, "Room with id " + request.getParameter("room") + " not found!");
+			return;
 		}
 		
 		ChapterAccess ca = new ChapterAccess();
@@ -112,7 +111,7 @@ public class ChapterServlet extends HttpServlet {
 		
 		ca.saveOrUpdateChapter(chapter);
 		
-		response.getWriter().write("{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"position\":" + chapter.getPosition() + "\"}");
+		response.getWriter().write(chapter.toString());
 	}
 
 	/**
