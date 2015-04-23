@@ -178,7 +178,7 @@ public class RoomServlet extends HttpServlet {
 		if(request.getParameter("add_user") != null)
 		{
 			UserAccess ua = new UserAccess();
-			User user = ua.getUserByWhatEver("id", request.getParameter("add_user"));
+			User user = ua.getUserById(Integer.parseInt(request.getParameter("add_user")));
 			if(user == null)
 			{
 				response.sendError(404, "User with id " + request.getParameter("add_user") + " not found!");
@@ -189,7 +189,7 @@ public class RoomServlet extends HttpServlet {
 		if(request.getParameter("rem_user") != null)
 		{
 			UserAccess ua = new UserAccess();
-			User user = ua.getUserByWhatEver("ID", request.getParameter("add_user"));
+			User user = ua.getUserById(Integer.parseInt(request.getParameter("rem_user")));
 			if(user == null)
 			{
 				response.sendError(404, "User with id " + request.getParameter("id") + " not found!");
