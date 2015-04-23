@@ -3,6 +3,8 @@ package model;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,7 +50,6 @@ public class ChapterAccess {
 			return false;
 		}
 	}
-
 	public Chapter getChapterById(Integer chapterId){
 		try
 		{
@@ -68,7 +69,6 @@ public class ChapterAccess {
 			return null;
 		}
 	}
-	
 	public List<Chapter> getChaptersByRoomId(Integer roomId){
 		try
 		{
@@ -79,13 +79,6 @@ public class ChapterAccess {
 			criteria.add(Restrictions.eq("roomId", roomId));
 			@SuppressWarnings("unchecked")
 			List<Chapter> chapters = (List<Chapter>) criteria.list();
-			
-			/*for (Chapter chapter : chapters)
-			{
-				chapters.removeIf(haveSameId(chapter.getId()));
-				chapters.add(chapter);
-			}*/
-			
 			transaction.commit();
 			return chapters;
 			
@@ -96,11 +89,7 @@ public class ChapterAccess {
 			System.out.println(e.getMessage());
 			return null;
 		}
-	}
-	/*private static Predicate<Chapter> haveSameId(Integer id) {
-        return p -> p.getId() == id;
-    }*/
-	
+	}	
 	public Boolean deleteChapter(Chapter chapter){
 		try
 		{
