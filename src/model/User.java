@@ -83,7 +83,7 @@ public class User implements Serializable {
 	
 	@Override
 	public String toString(){
-		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"email\":" + this.email + "}";
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"email\":\"" + this.email + "\"}";
 	}	
 	
 	public boolean equals(Object other){
