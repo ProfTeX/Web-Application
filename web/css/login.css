@@ -177,8 +177,12 @@ border-radius: 3px;
   opacity: 1;
 }
 
-.heador h1 {
+.header h1 {
 	color: #ffffff;
 	position: relative;
   	top: -30px;
+}
+.loginfo h1 {
+	color: #f0f0f0;
+	text-align: center;
 }
