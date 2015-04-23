@@ -110,10 +110,11 @@ public class ImageServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+	 * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
 	 * POST image?room={ROOMID}: Array of Filenames
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletOutputStream out = response.getOutputStream();
 		
 		File imageDir = new File(getServletContext().getRealPath("/") + "images");
 		imageDir.mkdirs();

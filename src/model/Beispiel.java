@@ -60,9 +60,9 @@ public class Beispiel {
 		User user = ua.getUserByName("create");
 		System.out.println(user.getRooms().get(0).getCreatedAt());*/
 		//Alternative
-		RoomAccess ra = new RoomAccess();
+		/*RoomAccess ra = new RoomAccess();
 		Room room = ra.getRoomById(4);
-		System.out.println(room.getChapters());
+		System.out.println(room.getChapters());*/
 		
 		/*How to update a Room
 		RoomAccess ra = new RoomAccess();
@@ -70,8 +70,8 @@ public class Beispiel {
 		room.setName("update");
 		ra.saveOrUpdateRoom(room);*/
 		
-		/*How to delete a Room
-		UserAccess ua = new UserAccess();
+		/*How to delete a Room*/
+		/*UserAccess ua = new UserAccess();
 		User user = ua.getUserByEmail("cre@e.test");
 		RoomAccess ra = new RoomAccess();
 		ra.deleteRoom(user.getRooms().get(0));*/
@@ -136,6 +136,11 @@ public class Beispiel {
 		snippet.setTitle("update");
 		ca.saveOrUpdateChapter(chapters.get(0));*/
 		//Alternative: ua.saveOrUpdateUser(user);
+		
+		/*How to delete a Snippet*/
+		UserAccess ua = new UserAccess();
+		User user = ua.getUserByEmail("test");
+		ua.deleteUser(user);
 		
 //Tag
 		/*How to create a Tag

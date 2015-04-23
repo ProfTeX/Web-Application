@@ -112,7 +112,7 @@ public class ChapterServlet extends HttpServlet {
 		
 		ca.saveOrUpdateChapter(chapter);
 		
-		response.getWriter().write("{\"id\":\"" + chapter.getId() + "\", \"name\":\"" + chapter.getName() + "\", \"position\":" + chapter.getPosition() + "\"}");
+		response.getWriter().write("{\"id\":" + chapter.getId() + ", \"name\":\"" + chapter.getName() + "\", \"position\":" + chapter.getPosition() + "}");
 	}
 
 	/**

@@ -3,16 +3,13 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="Tag")
-public class Tag implements Serializable {
+public class Tag implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -31,9 +28,10 @@ public class Tag implements Serializable {
 	
 	
 	//bi-directional many-to-many association to Snippet
-	@ManyToMany(fetch = FetchType.LAZY) 
-	@Fetch(FetchMode.SELECT)
-	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	//@Fetch(FetchMode.SELECT)
+	//@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Tag_ID")}, inverseJoinColumns={@JoinColumn(name="Snippet_ID")})
+	@ManyToMany(mappedBy = "tags")
 	private List<Snippet> snippets = new ArrayList<Snippet>();
 
 
@@ -82,5 +80,20 @@ public class Tag implements Serializable {
 	}
 	
 	public Tag() {
+	}
+	
+	@Override
+	public String toString(){
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\"}";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Tag)) return false;
+		if (((Tag) other).getId() == 0) return false;
+		if (((Tag) other).getId() == this.id) return true;
+		return false;
 	}
 }

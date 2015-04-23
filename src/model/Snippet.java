@@ -39,14 +39,14 @@ public class Snippet implements Serializable {
 	
 	//bi-directional many-to-many association to Chapter
 	//, joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")}
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="Chapter_has_Snippet", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Chapter_ID")})
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 	
 	
 	//bi-directional many-to-many association to Tag
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.DETACH)
 	@Fetch(FetchMode.SELECT)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name="Snippet_has_Tag", joinColumns={@JoinColumn(name="Snippet_ID")}, inverseJoinColumns={@JoinColumn(name="Tag_ID")})
@@ -128,5 +128,21 @@ public class Snippet implements Serializable {
 	}
 	
 	public Snippet() {
+	}
+	
+	@Override
+	public String toString(){
+		ListToString<Tag> lts = new ListToString<Tag>();
+		return "{\"id\":" + this.id + ", \"title\":\"" + this.title + "\", \"content\":\"" + this.content + "\", \"tags\":" + lts.listToString(this.tags) + ", \"position\":" + this.position + "}";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Tag)) return false;
+		if (((Snippet) other).getId() == 0) return false;
+		if (((Snippet) other).getId() == this.id) return true;
+		return false;
 	}
 }
