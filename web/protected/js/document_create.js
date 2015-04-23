@@ -1,3 +1,5 @@
+var roomId = 0;
+
 function newSnippet() {
     var e = $('#tag-filter');
     var pos = 0;
@@ -84,14 +86,15 @@ function remove() {
 }
 
 function accept() {
-	if($(this).parent().parent().hasClass('chapter')){
+	var block = $(this).parent().parent();
+	if(block.hasClass('chapter')){
 		if ($(this).parent().parent().data('id')===""){
 			$.ajax({
 	            url: "chapter/",
 	            method: "POST",
 	            data: {
-	                name: name,
-	                room: room,
+	                name: block.find('.block-title').val(),
+	                room: ,
 	                snippets: snippets
 	            },
 	            statusCode: {
@@ -123,7 +126,7 @@ function accept() {
 	            }
 	        });
 		}
-		if($(this).parent().parent().hasClass('snippet')==""){
+		if($(this).parent().parent().hasClass('snippet')===""){
 			
 		}
 		else{
