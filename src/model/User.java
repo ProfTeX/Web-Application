@@ -28,7 +28,7 @@ public class User implements Serializable {
 	
 	
 	//bi-directional many-to-many association to Room
-	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name="User_has_Room", joinColumns={@JoinColumn(name="User_ID")}, inverseJoinColumns={@JoinColumn(name="Room_ID")})
 	private List<Room> rooms = new ArrayList<Room>();
@@ -79,5 +79,20 @@ public class User implements Serializable {
 	}
 	
 	public User() {
+	}
+	
+	@Override
+	public String toString(){
+		return "{\"id\":" + this.id + ", \"name\":\"" + this.name + "\", \"email\":" + this.email + "}";
+	}	
+
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof User)) return false;
+		if (((User) other).getId() == 0) return false;
+		if (((User) other).getId() == this.id) return true;
+		return false;
 	}
 }

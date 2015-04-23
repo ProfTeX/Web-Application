@@ -129,4 +129,20 @@ public class Snippet implements Serializable {
 	
 	public Snippet() {
 	}
+	
+	@Override
+	public String toString(){
+		ListToString<Tag> lts = new ListToString<Tag>();
+		return "{\"id\":" + this.id + ", \"title\":\"" + this.title + "\", \"content\":\"" + this.content + "\", \"tags\":" + lts.listToString(this.tags) + ", \"position\":" + this.position + "}";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Snippet)) return false;
+		if (((Snippet) other).getId() == 0) return false;
+		if (((Snippet) other).getId() == this.id) return true;
+		return false;
+	}
 }

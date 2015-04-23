@@ -137,10 +137,10 @@ public class Beispiel {
 		ca.saveOrUpdateChapter(chapters.get(0));*/
 		//Alternative: ua.saveOrUpdateUser(user);
 		
-		/*How to delete a Snippet*/
+		/*How to delete a Snippet
 		UserAccess ua = new UserAccess();
 		User user = ua.getUserByEmail("test");
-		ua.deleteUser(user);
+		ua.deleteUser(user);*/
 		
 //Tag
 		/*How to create a Tag
@@ -182,6 +182,18 @@ public class Beispiel {
 		TagAccess ta = new TagAccess();
 		Tag tag = ta.getTagByName("update");
 		ta.deleteTag(tag);*/
+		
+		/*UserAccess ua = new UserAccess();
+		User user = ua.getUserById(9);
+		
+		RoomAccess ra = new RoomAccess();
+		Room room = ra.getRoomById(6);
+		
+
+		System.out.println(user.getRooms());
+		user.removeRoom(room);
+		System.out.println(user.getRooms());
+		ua.saveOrUpdateUser(user);*/
 	}
 	
 }
