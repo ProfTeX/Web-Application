@@ -104,4 +104,9 @@ public class Chapter implements Serializable {
 
 	public Chapter() {
 	}
+	
+	@Override
+	public String toString(){
+		return "";
+	}
 }
