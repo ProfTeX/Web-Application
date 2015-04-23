@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title>ProfTeX - Raeume</title>
-		<link rel="stylesheet" type="text/css" href="../css/room_overview.css">
+		<link rel="stylesheet" type="text/css" href="css/room_overview.css">
 		<script src="js/jquery.min.js"></script>
 		<script src="js/viewroom.js" defer></script>
 	</head>
