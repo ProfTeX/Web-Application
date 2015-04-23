@@ -84,6 +84,56 @@ function remove() {
 }
 
 function accept() {
+	if($(this).parent().parent().hasClass('chapter')){
+		if ($(this).parent().parent().data('id')===""){
+			$.ajax({
+	            url: "chapter/",
+	            method: "POST",
+	            data: {
+	                name: name,
+	                room: room,
+	                snippets: snippets
+	            },
+	            statusCode: {
+	                401: function() {
+	                    reject({status: 401 });
+	                },
+	                200: function(data) {
+	                    resolve(data);
+	                }
+	            }
+	        });
+		}
+		else{
+			$.ajax({
+	            url: "chapter/",
+	            method: "PUT",
+	            data: {
+	                name: email,
+	                room: password,
+	                snippets: snippets
+	            },
+	            statusCode: {
+	                401: function() {
+	                    reject({status: 401 });
+	                },
+	                200: function(data) {
+	                    resolve(data);
+	                }
+	            }
+	        });
+		}
+		if($(this).parent().parent().hasClass('snippet')==""){
+			
+		}
+		else{
+			
+		}
+		
+		
+		
+	}
+	
     console.log("Accept works!");
 }
 
