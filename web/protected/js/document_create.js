@@ -301,7 +301,8 @@ function addImages( images ) {
 }
 
 function loadImages() {
-	$.get('../image?room=' + room ).done( function( data ) {
+	$.get('../image?room=' + room.id ).done( function( data ) {
+		console.log(data);
 		data = JSON.parse( data );
 		addImages( data );
 	});
