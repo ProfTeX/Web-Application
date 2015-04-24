@@ -29,9 +29,7 @@ public class ShowRoomsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserAccess ua = new UserAccess();
 		User currUser = ua.getUserByEmail(request.getUserPrincipal().getName());
-		
-		System.out.println(currUser.getId());
-		
+				
 		request.setAttribute("user", currUser);
 		getServletContext().getRequestDispatcher("/protected/room_overview.jsp").forward(request, response);
 	}

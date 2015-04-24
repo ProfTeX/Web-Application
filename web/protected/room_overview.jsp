@@ -17,7 +17,7 @@
 		
 		<br><br><br><br><br>
 		<% for(Room room : user.getRooms()) { %>
-			<a class="button" href="doument_create.jsp?room=<%=room.getId() %>"><%=room.getName() %></a>
+			<a class="button" href="protected/document_create.jsp?room=<%=room.getId() %>"><%=room.getName() %></a>
 		<% } %>
 		<div class="button" id="new_room">Erstelle einen neuen Raum!</div>
 		<div id="popup">
