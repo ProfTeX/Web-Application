@@ -35,7 +35,7 @@ function showpdf()
                 console.log('400');
             },
             200: function (data) {
-                $('.pdf-render').html(data);
+                $('.pdf-render').html(data.responseText);
                 $('object.pdf_obj').css("width", $('div.pdf-div').width());
                 $('object.pdf_obj').css("height", $('div.pdf-div').height() - $('button#closepdf').height());
             }
