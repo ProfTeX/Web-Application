@@ -17,7 +17,8 @@ nav {
     position: absolute;
     right: 50px;
     top: 4px;
-    text-align: center; }
+    text-align: center; 
+    }
     nav .logout span {
       background: url("appbar.door.leave.png") no-repeat scroll center top / contain transparent;
       content: "";
@@ -31,6 +32,21 @@ nav {
       background: url("appbar.settings.png") no-repeat scroll center top / contain transparent;
       content: "";
       padding: 6px 0px 26px 48px; }
+      
+   nav .addRoom {
+    position: absolute;
+    right: 96px;
+    top: 4px;
+    text-align: center; 
+    }
+      nav .addRoom span {
+      background: url("appbar.tiles.plus.png") no-repeat scroll center top / contain transparent;
+      content: "";
+      padding: 6px 0px 26px 48px; }
+
+#new_room {
+	cursor: pointer;
+}
 
 body, html {
   margin: 0;
@@ -83,6 +99,11 @@ a.button:active {
   height: 170px;
   background-color: #000;
   color: #FFF;
+  border: 1px solid;
+  border-color: #FFF;
+}
+#close {
+	cursor: pointer;
 }
   #popup input[type=text] {
     width: 90%;
@@ -110,3 +131,23 @@ a.button:active {
     right: 0;
     top: 0;
   }
+  #roombox {
+  text-align: center;
+ }
+  .button {
+    font: bold 20px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    padding: 25px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border: 0px;
+    border-radius: 5px;
+    color: #F0F0F0;
+    font-family: TeX, serif;
+    font-size: 20px;
+    color: #F0F0F0;
+    background-color: #101010;
+    margin: 2px; 
+    }
