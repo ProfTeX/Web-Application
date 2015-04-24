@@ -8,7 +8,8 @@
 <body>
     <nav>
         <div class="logo">ProfTeX</div>
-        <div class="threebars"><div></div></div>
+        <a href ="logout.jsp" class="logout"><span></span></a>
+        <a href ="user_config.jsp"  class="settings"><span></span></span></a>
     </nav>
     <div class="container">
     	<div class="loginfo">

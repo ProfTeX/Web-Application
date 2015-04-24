@@ -11,8 +11,9 @@
 	</head>
 	<body>
 		<nav>
-			<div class="logo">ProfTeX</div>
-			<a href ="user_config.jsp"><span class="threebars"><div></div></span></a>
+                    <div class="logo">ProfTeX</div>
+                    <a href ="logout.jsp" class="logout"><span></span></a>
+                    <a href ="user_config.jsp" class="settings"><span></span></span></a>
 		</nav>
 		
 		<br><br><br><br><br>

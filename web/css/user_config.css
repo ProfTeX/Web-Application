@@ -13,22 +13,24 @@ nav {
     font-family: TeX, serif;
     font-size: 30px;
     padding: 1px 0 4px 0; }
-  nav .threebars {
+  nav .logout {
     position: absolute;
-    right: 0;
-    top: 0;
-    height: 45px;
-    width: 40px;
+    right: 50px;
+    top: 4px;
     text-align: center; }
-    nav .threebars div {
-      position: absolute;
-      top: 5px;
-      border-bottom: 14px double #F0F0F0;
-      border-top: 5px solid #F0F0F0;
+    nav .logout span {
+      background: url("appbar.door.leave.png") no-repeat scroll center top / contain transparent;
       content: "";
-      height: 5px;
-      width: 30px;
-      margin: 5px 0; }
+      padding: 6px 0px 26px 48px; }
+  nav .room_overview {
+    position: absolute;
+    right: 7px;
+    top: 4px;
+    text-align: center; }
+    nav .room_overview span {
+      background: url("appbar.tiles.nine.png") no-repeat scroll center top / contain transparent;
+      content: "";
+      padding: 6px 0px 26px 48px; }
 
 body, html {
   margin: 0;
