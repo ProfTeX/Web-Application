@@ -30,6 +30,8 @@ public class ShowRoomsServlet extends HttpServlet {
 		UserAccess ua = new UserAccess();
 		User currUser = ua.getUserByEmail(request.getUserPrincipal().getName());
 		
+		System.out.println(currUser.getId());
+		
 		request.setAttribute("user", currUser);
 		getServletContext().getRequestDispatcher("/protected/room_overview.jsp").forward(request, response);
 	}

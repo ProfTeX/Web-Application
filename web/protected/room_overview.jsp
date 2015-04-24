@@ -6,7 +6,7 @@
 	<head>
 		<title>ProfTeX - Raeume</title>
 		<link rel="stylesheet" type="text/css" href="css/room_overview.css">
-		<script src="js/jquery.min.js"></script>
+		<script src="protected/js/jquery.min.js"></script>
 		<script src="js/viewroom.js" defer></script>
 	</head>
 	<body>
@@ -16,9 +16,9 @@
 		</nav>
 		
 		<br><br><br><br><br>
-		<c:forEach items="${user.rooms}" var="room">
-			<a class="button" href="doument_create.jsp">${room}</a>
-		</c:forEach>
+		<% for(Room room : user.getRooms()) { %>
+			<a class="button" href="doument_create.jsp?room=<%=room.getId() %>"><%=room.getName() %></a>
+		<% } %>
 		<div class="button" id="new_room">Erstelle einen neuen Raum!</div>
 		<div id="popup">
 			<div class="close">schlieﬂen</div> 
