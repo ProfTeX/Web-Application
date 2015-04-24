@@ -87,14 +87,18 @@ function tagged(e, params) {
 
 function remove() {
     var block = $(this).parent().parent();
+    if (block.data('id') === ""){
+        block.remove();
+        return;
+    }
     if (block.hasClass('chapter')) {
         $.ajax({
-            url: "../chapter",
+            url: "../chapter?id="+block.data('id'),
             mimeType: "application/json",
             method: "DELETE",
-            data: {
-                id: block.data('id')
-            },
+//            data: {
+//                id: block.data('id')
+//            },
             statusCode: {
                 404: function () {
                     console.log('404');
@@ -104,20 +108,19 @@ function remove() {
                 },
                 200: function (data) {
                     console.log('200');
-                    e = $(this);
-                    e.parent().parent().remove();
+                    block.remove();
                 }
             }
         });
     }
     if (block.hasClass('snippet')) {
         $.ajax({
-            url: "../snippet",
+            url: "../snippet?id="+block.data('id'),
             mimeType: "application/json",
             method: "DELETE",
-            data: {
-                id: block.data('id')
-            },
+//            data: {
+//                id: block.data('id')
+//            },
             statusCode: {
                 404: function () {
                     console.log('404');
@@ -127,8 +130,7 @@ function remove() {
                 },
                 200: function (data) {
                     console.log('200');
-                    e = $(this);
-                    e.parent().parent().remove();
+                    block.remove();
                 }
             }
         });

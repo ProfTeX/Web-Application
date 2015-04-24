@@ -231,6 +231,7 @@ public class SnippetServlet extends HttpServlet {
 			
 			for(String tagStr : tags)
 			{
+				if (tagStr.trim().equals("")) continue;
 				Tag tag = ta.getTagByName(tagStr.trim());
 				if(tag != null)
 				{
