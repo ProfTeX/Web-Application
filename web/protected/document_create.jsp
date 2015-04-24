@@ -10,7 +10,9 @@
         <script src="js/pdf.js"></script>
         <script>
             var room = <%=request.getParameter("room")%>;
-            var tags = <%=(new TagAccess()).getAllTags().toString()%>;
+            var tagObjs = <%=(new TagAccess()).getAllTags().toString()%>;
+            var tags = tagObjs.map(function(e){return e.name;}).join(', ');
+            console.log(tags);
         </script>
 
     </head>
@@ -29,13 +31,7 @@
             <div id="right">
                 <div id="tag-filter">
                     <select multiple data-placeholder="Filter-Tags auswählen...">
-                        <option value="beispiel">beispiel</option>
-                        <option value="beweis">beweis</option>
-                        <option value="definition">definition</option>
-                        <option value="lösung">lösung</option>
-                        <option value="übung">übung</option>
-                        <option value="vl1">vl1</option>
-                        <option value="vl2">vl2</option>
+                        
                     </select>
                 </div>                
                 <div class="new-element">

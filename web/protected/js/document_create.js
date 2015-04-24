@@ -20,7 +20,7 @@ function newSnippet() {
             '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" /><br /></div>' +
             '    <div><label for="desc">Beschreibung:</label><br />' +
             '    <textarea name="desc" class="block-text"></textarea></div>' +
-            '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1"/></div>' +
+            '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="' + tags + '" /></div>' +
             '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
             '</div>' +
             '</div>');
@@ -137,6 +137,13 @@ function remove() {
 }
 
 function getBlocks() {
+    var output = '';
+    for (var i = 0; i < tagObjs.length; i++) {
+        output += '<option value="' + tagObjs[i].name + '">' + tagObjs[i].name + '</option>\n';
+    }
+    
+    $('#tag-filter select').html(output).trigger('chosen:updated');;
+    
     $.ajax({
         url: '../room',
         method: 'GET',
@@ -162,14 +169,14 @@ function getBlocks() {
 //                            '<div class="move_down"><span></span></div>' +
                             '</div>';
                     for (var z = 0; z < data[0].chapters[i].snippets.length; z++) {
-                        var tags = data[0].chapters[i].snippets[z].tags.map(function(e){return e.name;}).join(', ');
+                        var selTags = data[0].chapters[i].snippets[z].tags.map(function(e){return e.name;}).join(', ');
                         output += '<div data-id="' + data[0].chapters[i].snippets[z].id + '" data-chapter-id="' + data[0].chapters[i].id + '" data-position="' + data[0].chapters[i].snippets[z].position + '" class="element snippet">' +
                                 '<div class="checkbox"><input type="checkbox" name="choose" /></div>' +
                                 '<div class="block">' +
                                 '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="' + data[0].chapters[i].snippets[z].title + '" /><br /></div>' +
                                 '    <div><label for="desc">Beschreibung:</label><br />' +
                                 '    <textarea name="desc" class="block-text">' + data[0].chapters[i].snippets[z].content + '</textarea></div>' +
-                                '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1" value="' + tags + '"/></div>' +
+                                '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="' + tags + '" value="' + selTags + '"/></div>' +
                                 '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                                 '</div>' +
 //                                '<div class="move_up"><span></span></div>' +
