@@ -22,7 +22,7 @@
 	   return context.getRealm(); */
 	   
 	   // New location to be redirected
-	   String site = new String("http://localhost:8080/proftex/protected/room_overview.jsp");
+	   String site = new String("../Rooms");
 	   response.setStatus(response.SC_MOVED_TEMPORARILY);
 	   response.setHeader("Location", site); 
 	%>
