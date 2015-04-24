@@ -8,7 +8,7 @@
 	<nav>
             <div class="logo">ProfTeX</div>
             <a href ="logout.jsp" class="logout"><span></span></a>
-            <a href ="room_overview.jsp" class="room_overview"><span></span></span></a>
+            <a href ="../Rooms" class="room_overview"><span></span></span></a>
 	</nav>
 
 	<div class="container">
