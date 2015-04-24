@@ -6,7 +6,7 @@
 
 <body>
 	<nav>
-            <div class="logo">ProfTeX</div>
+            <div class="logo"><a href = "../Rooms" style="text-decoration: none;color:#FFF;">ProfTeX</a></div>
             <a href ="logout.jsp" class="logout"><span></span></a>
             <a href ="../Rooms" class="room_overview"><span></span></span></a>
 	</nav>
