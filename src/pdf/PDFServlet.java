@@ -126,7 +126,7 @@ public class PDFServlet extends HttpServlet {
 				if(snippets.contains(snippet))
 				{
 					content += "\\subsection{" + snippet.getTitle() + "}\n";
-					content += snippet.getContent().replace("\\", "\\\\") + "\n";
+					content += snippet.getContent().replace("\\\\", "\\") + "\n";
 				}
 			}
 		}

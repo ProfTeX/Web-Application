@@ -132,7 +132,7 @@ public class Snippet implements Serializable {
 	
 	@Override
 	public String toString(){
-		return "{\"id\":" + this.id + ", \"title\":\"" + this.title + "\", \"content\":\"" + this.content.replaceAll("\\r|\\n", "\\\\n") + "\", \"tags\":" + this.tags + ", \"position\":" + this.position + "}";
+		return "{\"id\":" + this.id + ", \"title\":\"" + this.title + "\", \"content\":\"" + this.content.replaceAll("\\r|\\n", "\\\\n").replace("\\", "\\\\") + "\", \"tags\":" + this.tags + ", \"position\":" + this.position + "}";
 	}
 	
 	@Override

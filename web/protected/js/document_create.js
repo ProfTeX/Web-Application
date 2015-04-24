@@ -157,7 +157,8 @@ function getBlocks() {
             },
             200: function (data) {
                 var output = '';
-                console.log(data[0]);
+                //var data = JSON.parse(result.responseText);
+                console.log(data);
                 for (var i = 0; i < data[0].chapters.length; i++) {
                     output += '<div data-id="' + data[0].chapters[i].id + '" data-position="' + data[0].chapters[i].position + '" class="element chapter">' +
                             '<div class="checkbox"><input type="checkbox" name="choose" /></div>' +
