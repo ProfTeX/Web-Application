@@ -149,6 +149,7 @@ function getBlocks() {
             },
             200: function (data) {
                 var output = '';
+                console.log(data[0]);
                 for (var i = 0; i < data[0].chapters.length; i++) {
                     output += '<div data-id="' + data[0].chapters[i].id + '" data-position="' + data[0].chapters[i].position + '" class="element chapter">' +
                             '<div class="checkbox"><input type="checkbox" name="choose" /></div>' +
@@ -158,20 +159,20 @@ function getBlocks() {
                             '</div>' +
                             '</div>';
                     for (var z = 0; z < data[0].chapters[i].snippets.length; z++) {
+                        var tags = data[0].chapters[i].snippets[z].tags.map(function(e){return e.name;}).join(', ');
                         output += '<div data-id="' + data[0].chapters[i].snippets[z].id + '" data-chapter-id="' + data[0].chapters[i].id + '" data-position="' + data[0].chapters[i].snippets[z].position + '" class="element snippet">' +
                                 '<div class="checkbox"><input type="checkbox" name="choose" /></div>' +
                                 '<div class="block">' +
                                 '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="' + data[0].chapters[i].snippets[z].title + '" /><br /></div>' +
                                 '    <div><label for="desc">Beschreibung:</label><br />' +
                                 '    <textarea name="desc" class="block-text">' + data[0].chapters[i].snippets[z].content + '</textarea></div>' +
-                                '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1" value="' + data[0].chapters[i].snippets[z].tags.join(',') + '"/></div>' +
+                                '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1" value="' + tags + '"/></div>' +
                                 '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                                 '</div>' +
                                 '</div>';
                     }
-                    $('#tag-filter').after(output);
                 }
-
+                $('#tag-filter').after(output);
             }
         }
     });
@@ -179,6 +180,8 @@ function getBlocks() {
 
 function accept() {
     var block = $(this).parent().parent();
+    
+    // if chapter
     if (block.hasClass('chapter')) {
         if (block.data('id') === "") {
             $.ajax({
@@ -198,8 +201,7 @@ function accept() {
                         console.log('400');
                     },
                     200: function (data) {
-                        console.log('200');
-                        resolve(data);
+                        block.data('id', data.id);
                     }
                 }
             });
@@ -223,12 +225,12 @@ function accept() {
                     },
                     200: function (data) {
                         console.log('200');
-                        resolve(data);
                     }
                 }
             });
         }
     }
+    // if snippet
     if (block.hasClass('snippet')) {
         if (block.data('id') === "") {
             $.ajax({
@@ -238,7 +240,7 @@ function accept() {
                 data: {
                     title: block.find('.block-title').val(),
                     content: block.find('.block-text').val(),
-                    tags: block.find('.block-tags').val(),
+                    tags: block.find('.block-tags').val().replace(' ', ''),
                     position: block.data('position'),
                     chapter: block.data('chapter-id')
                 },
@@ -250,8 +252,8 @@ function accept() {
                         console.log('400');
                     },
                     200: function (data) {
-                        console.log('200');
-                        resolve(data);
+                        console.log(data);
+                        block.data('id', data.id);
                     }
                 }
             });
@@ -265,7 +267,7 @@ function accept() {
                     id: block.data('id'),
                     title: block.find('.block-title').val(),
                     content: block.find('.block-text').val(),
-                    tags: block.find('.block-tags').val(),
+                    tags: block.find('.block-tags').val().replace(' ', ''),
                     position: block.data('position'),
                     chapter: block.data('chapter-id')
                 },
@@ -278,15 +280,11 @@ function accept() {
                     },
                     200: function (data) {
                         console.log('200');
-                        resolve(data);
                     }
                 }
             });
         }
-
     }
-
-    console.log("Accept works!");
 }
 
 document.addEventListener("DOMContentLoaded", getBlocks);
