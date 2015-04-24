@@ -36,8 +36,7 @@ function newChapter() {
     if ($('#right .element').last().data('position') !== undefined) {
         e = $('#right .element').last();
         pos = e.data('position') + 1;
-    }
-    ;
+    };
 
     var newChapter = $('<div id="new-chapter" data-id="" data-position="' + pos + '" class="element chapter">' +
             '<div class="checkbox"><input type="checkbox" name="choose" value="" /></div>' +
@@ -159,6 +158,8 @@ function getBlocks() {
                             '    <div><label for="title">Titel:</label><input type="text" name="title" class="block-title" value="' + data[0].chapters[i].name + '" /><br /></div>' +
                             '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                             '</div>' +
+//                            '<div class="move_up"><span></span></div>' +
+//                            '<div class="move_down"><span></span></div>' +
                             '</div>';
                     for (var z = 0; z < data[0].chapters[i].snippets.length; z++) {
                         var tags = data[0].chapters[i].snippets[z].tags.map(function(e){return e.name;}).join(', ');
@@ -171,6 +172,8 @@ function getBlocks() {
                                 '    <div><label for="tags">Tags:</label><input type="text" name="tags" class="block-tags" placeholder="definition, beispiel, lösung, übung, vl1" value="' + tags + '"/></div>' +
                                 '    <button class="submit">Übernehmen</button><button class="remove">Löschen</button>' +
                                 '</div>' +
+//                                '<div class="move_up"><span></span></div>' +
+//                                '<div class="move_down"><span></span></div>' +
                                 '</div>';
                     }
                 }

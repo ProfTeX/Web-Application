@@ -105,6 +105,26 @@ body, html {
           height: 270px;}
         #content #right .element .checkbox {
           position: absolute; }
+        #content #right .element div.move_down {
+          position: absolute;
+          left: -9px;
+          bottom: 4px;
+          height: 32px;
+          cursor: pointer;}
+          #content #right .element div.move_down span {
+            background: url("appbar.arrow.down.png") no-repeat scroll center top / contain transparent;
+            content: "";
+            padding: 6px 0px 26px 48px; }
+        #content #right .element div.move_up {
+          position: absolute;
+          left: -9px;
+          bottom: 33px;
+          height: 32px;
+          cursor: pointer; }
+          #content #right .element div.move_up span {
+            background: url("appbar.arrow.up.png") no-repeat scroll center top / contain transparent;
+            content: "";
+            padding: 6px 0px 26px 48px; }
         #content #right .element .block {
           position: absolute;
           width: 91%;
