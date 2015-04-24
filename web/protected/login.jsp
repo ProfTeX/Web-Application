@@ -17,7 +17,7 @@
      </div>
     <%
 	   // New location to be redirected
-	   String site = new String("room_overview.jsp");
+	   String site = new String("../Rooms");
 	   response.setStatus(response.SC_MOVED_TEMPORARILY);
 	   response.setHeader("Location", site); 
 	%>
