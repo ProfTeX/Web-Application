@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.TagAccess" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +8,10 @@
         <link href="../css/document_create.css" rel="stylesheet" type="text/css"/>
         <link href="../css/chosen.css" rel="stylesheet" type="text/css"/>
         <script src="js/pdf.js"></script>
-        <script>var room = <%=request.getParameter("room")%></script>
+        <script>
+            var room = <%=request.getParameter("room")%>;
+            var tags = <%=(new TagAccess()).getAllTags().toString()%>;
+        </script>
 
     </head>
     <body>

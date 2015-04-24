@@ -310,6 +310,7 @@ function loadImages() {
 document.addEventListener("DOMContentLoaded", getBlocks);
 document.addEventListener("DOMContentLoaded", loadImages);
 
+
 $('#left > img').click(function () {
     $(this).toggleClass('big');
 });
