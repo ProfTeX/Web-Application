@@ -6,8 +6,9 @@
 
 <body>
 	<nav>
-		<div class="logo">ProfTeX</div>
-        <div class="threebars"><div></div></div>
+            <div class="logo">ProfTeX</div>
+            <a href ="logout.jsp" class="logout"><span></span></a>
+            <a href ="room_overview.jsp" class="room_overview"><span></span></span></a>
 	</nav>
 
 	<div class="container">
