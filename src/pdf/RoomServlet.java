@@ -73,7 +73,8 @@ public class RoomServlet extends HttpServlet {
 				
 		//current user needs permission to access new room
 		UserAccess ua = new UserAccess();
-		User user = ua.getUserByName("test");
+		//response.getWriter().write(request.getUserPrincipal().getName());
+		User user = ua.getUserByEmail(request.getUserPrincipal().getName());
 		if (user == null) {
 			response.sendError(404, "User not found!");
 			return;
