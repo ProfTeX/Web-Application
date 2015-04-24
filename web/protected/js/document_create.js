@@ -289,7 +289,23 @@ function accept() {
     }
 }
 
+function addImages( images ) {
+	images.forEach( function( e ) {
+		var elem = $('<img />');
+		elem.attr('src', 'images/' + e);
+		$('#left').prepend( elem );
+	});
+}
+
+function loadImages() {
+	$.get('../image?room=' + room ).data( function( data ) {
+		data = JSON.parse( data );
+		addImages( data );
+	});
+}
+
 document.addEventListener("DOMContentLoaded", getBlocks);
+document.addEventListener("DOMContentLoaded", loadImages);
 
 $('#left > img').click(function () {
     $(this).toggleClass('big');

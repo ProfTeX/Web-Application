@@ -29,6 +29,7 @@ public class RoomServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("id") == null)
 		{
 			response.sendError(400, "'id' parameter missing!");
@@ -53,6 +54,7 @@ public class RoomServlet extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("name") == null) {
 			response.sendError(400, "'name' parameter missing!");
 			return;
@@ -102,6 +104,7 @@ public class RoomServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("id") == null) 
 		{
 			response.sendError(400, "'id' parameter missing!");

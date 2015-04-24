@@ -36,6 +36,7 @@ public class ChapterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("id") == null) 
 		{
 			response.sendError(400, "'id' parameter missing!");
@@ -89,6 +90,7 @@ public class ChapterServlet extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("name") == null || request.getParameter("position") == null || request.getParameter("room") == null) 
 		{
 			response.sendError(400, "One or more parameters missing!" + request.getParameter("name") + request.getParameter("position")+request.getParameter("room"));

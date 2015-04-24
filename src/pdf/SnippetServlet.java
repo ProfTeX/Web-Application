@@ -31,6 +31,7 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("room") == null)
 		{
 			response.sendError(400, "'room' parameter missing!");
@@ -129,6 +130,7 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("id") == null)
 		{
 			response.sendError(400, "'id' parameter missing!");
@@ -198,6 +200,7 @@ public class SnippetServlet extends HttpServlet {
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		if(request.getParameter("title") == null || request.getParameter("content") == null || request.getParameter("position") == null || request.getParameter("chapter") == null)
 		{
 			response.sendError(400, "One or more mandatory parameters missing!");

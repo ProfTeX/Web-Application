@@ -18,10 +18,6 @@
         </nav>
         <div id="content">
             <div id="left">
-                <img src="beispiel.jpg" />
-                <img src="beispiel.jpg" />
-                <img src="beispiel.jpg" />
-                <img src="beispiel.jpg" />
                 <div id="upload">
                     <input type="file" value="Bild hochladen"/>
                 </div>
