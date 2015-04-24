@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -37,6 +38,26 @@ public class TagAccess {
 			if (transaction != null) transaction.rollback();
 			System.out.println(e.getMessage());
 			return false;
+		}
+	}
+	
+	public List<Tag> getAllTags(){
+		try
+		{
+			session = sf.getCurrentSession();
+			transaction = session.beginTransaction();
+
+			Criteria criteria = session.createCriteria(Tag.class);
+			List<Tag> tags = (List<Tag>) criteria.list();
+			
+			transaction.commit();
+			return tags;
+		}
+		catch(Exception e)
+		{
+			if (transaction != null) transaction.rollback();
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	
