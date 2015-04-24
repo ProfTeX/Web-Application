@@ -87,6 +87,11 @@ function tagged(e, params) {
 
 function remove() {
     var block = $(this).parent().parent();
+    if (block.data('id') === ""){
+        e = $(this);
+        e.parent().parent().remove();
+        return;
+    }
     if (block.hasClass('chapter')) {
         $.ajax({
             url: "../chapter",

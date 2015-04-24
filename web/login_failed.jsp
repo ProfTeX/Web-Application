@@ -20,7 +20,7 @@
 	<% session.invalidate(); %>
 	<%
 	   // New location to be redirected
-	   String site = new String("protected/login.jsp");
+	   String site = new String("login.jsp");
 	   response.setStatus(response.SC_MOVED_TEMPORARILY);
 	   response.setHeader("Location", site); 
 	%>
