@@ -15,7 +15,7 @@ $createroom.click () ->
     data:
       name: $roomname.val()
   .done ( data ) ->
-    data = data.pop()
+    data = JSON.parse(data).pop()
     url = 'protected/document_create.jsp?room=' + data.id
-    it = $('a').attr('href', url ).addClass('button').html( data.name )
+    it = $('<a>').attr('href', url ).addClass('button').html( data.name )
     $roombox.append it
