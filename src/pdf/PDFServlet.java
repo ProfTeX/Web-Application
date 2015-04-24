@@ -172,6 +172,13 @@ public class PDFServlet extends HttpServlet {
 		
 		request.setAttribute("pdf_path", "pdf_temp/"+pdf.getUUID() + ".pdf");
 		
+		File outFile = new File(pdf.getOutputDir() + "/" + pdf.getUUID() + ".pdf");
+		if(!outFile.exists())
+		{
+			response.sendError(500, "The Document could not be compiled! There probably is an error in the LaTex-Code.");
+			return;
+		}
+		
 		RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("protected/pdf.jsp");
 		RequetsDispatcherObj.forward(request, response);
 		
